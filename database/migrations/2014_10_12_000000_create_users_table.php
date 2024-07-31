@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('username');
             $table->string('email')->unique();
             $table->string('password')->unique();
-            //menurut skema db yang dibagikan, hanya ada 3 role, tidak ada role 'dosen biasa', maka dari itu, dosen biasa valuenya NULL
             $table->enum('role', ['kaprodi', 'dosen wali', 'mahasiswa']);
             $table->timestamps();
         });

@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mahasiswa', function (Blueprint $table) {
+        Schema::create('dosens', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->unique()->constrained('users')->onDelete('cascade');
-            $table->foreignId('kelas_id')->unique()->constrained('kelas')->onDelete('cascade');
-            $table->integer('nim')->unique();
+            $table->foreignId('kelas_id')->nullable()->unique()->constrained('kelas')->onDelete('cascade');
+            $table->integer('kode_dosen')->unique();
+            $table->integer('nip')->unique();
             $table->string('name');
-            $table->string('tempat_lahir');
-            $table->date('tanggal_lahir');
-            $table->boolean('edit')->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mahasiswa');
+        Schema::dropIfExists('dosens');
     }
 };
