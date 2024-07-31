@@ -24,3 +24,28 @@ Route::get('/app', function () {
 Route::get('/dashboardkaprodi', function () {
     return view('Kaprodi.dashboard');
 });
+
+Route::get('/dashboarddosen', function () {
+    return view('Dosen.dashboard');
+});
+
+Route::get('/detailclass', function () {
+    return view('Dosen.class_detail');
+})->name('detail.class');
+
+Route::get('/datamahasiswa', function () {
+    return view('Dosen.datamhs');
+});
+
+Route::get('/detailmhs', function () {
+    return view('Dosen.detailmhs');
+})->name('detailmhs');
+
+Route::get('/editmhs', function () {
+    return view('Dosen.editdatamhs');
+})->name('editmhs');
+
+
+Route::get('/pengajuanmhs', function () {
+    return view('Dosen.pengajuanmhs');
+})->name('ajumhs');
