@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -15,13 +18,14 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required:email.dns', 'email'],
+            'email' => ['required', 'email'],
             'password' => ['required']
         ]);
 
         if(Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            Log::info('Login successful, redirecting to /kaprodi');
             return redirect()->intended('/kaprodi');
         }
 
@@ -30,7 +34,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
