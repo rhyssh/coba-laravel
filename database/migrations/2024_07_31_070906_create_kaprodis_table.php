@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('kaprodis', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('email')->unique();
-            $table->string('password')->unique();
-            $table->enum('role', ['kaprodi', 'dosen wali', 'mahasiswa']);
+            $table->foreignId('user_id')->unique()->constrained('users')->onDelete('cascade');
+            $table->integer('kode_dosen')->unique();
+            $table->integer('nip')->unique();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('kaprodis');
     }
 };
