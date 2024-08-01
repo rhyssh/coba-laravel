@@ -27,12 +27,12 @@
 @section('title', 'Kaprodi Dashboard')
 
 @section('content')
-<h1 class="text-2xl font-semibold mb-6">Welcome, Kaprodi</h1>
-<p class="mb-5"> This is your classes</p>
+
 
 <div class="flex flex-col items-center gap-10 md:flex-row sm:mx-10">
     <div class="flex-1 bg-white p-6 rounded-lg border-2 border-indigo-700 shadow-md">
-        <h1 class="text-4xl font-bold mb-3">Kelas 1-A</h1>
+        <h3 class="text-indigo-600 mt-1 font-semibold text-xl text-center">Data Kelas</h3>
+        <h1 class="text-3xl font-bold mb-3">Kelas 1-A</h1>
         <div class="flex flex-row mb-3">
             <h2 class="text-xl font-normal mr-1">Dosen Wali: </h2>
             <a href="{{ route('kaprodi.dosen') }}" class="text-xl font-medium hover:underline">Jumanto</a>

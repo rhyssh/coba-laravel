@@ -33,7 +33,7 @@ Route::get('/detail-dosen', function () {
     return view('Kaprodi.detailDosen');
 })->name('kaprodi.dosen');
 
-Route::get('/detail-kelas', function () {
+Route::get('/detail-class', function () {
     return view('Kaprodi.classDetail');
 })->name('kaprodi.class');
 
@@ -44,3 +44,11 @@ Route::get('/edit-dosen', function () {
 Route::get('/edit-class', function () {
     return view('Kaprodi.editClass');
 })->name('kaprodi.editclass');
+
+Route::get('/create-class', function () {
+    return view('Kaprodi.createClass');
+})->name('kaprodi.createClass');
+
+Route::get('/create-dosen', function () {
+    return view('Kaprodi.createDosen');
+})->name('kaprodi.createDosen');
