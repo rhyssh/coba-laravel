@@ -3,18 +3,6 @@
 @section('title', 'Detail Mahasiswa')
 
 @section('content')
-    @php
-        // Contoh detail data mahasiswa
-        $student = (object)[
-            'id' => 1,
-            'nama' => 'Alice',
-            'nim' => '123456',
-            'email' => 'alice@example.com',
-            'alamat' => 'Jl. Mawar No. 123',
-            'telepon' => '081234567890'
-        ];
-    @endphp
-
     <h1 class="text-2xl font-semibold mb-6">Detail Mahasiswa: {{ $student->nama }}</h1>
 
     <div class="bg-white p-8 rounded-lg border-2 border-indigo-700 shadow-md">
@@ -22,7 +10,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div class="bg-indigo-50 p-4 rounded-lg">
                 <p class="font-semibold text-indigo-700">Nama</p>
-                <p>{{ $student->nama }}</p>
+                <p>{{ $student->name }}</p>
             </div>
             <div class="bg-indigo-50 p-4 rounded-lg">
                 <p class="font-semibold text-indigo-700">NIM</p>
@@ -42,7 +30,7 @@
             </div>
         </div>
         <div class="flex justify-end">
-            <a href="{{ route('editmhs') }}" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition duration-200">Edit Data</a>
+            <a href="{{ route('mahasiswa.index') }}" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition duration-200">Kembali ke Indeks</a>
         </div>
     </div>
 @endsection

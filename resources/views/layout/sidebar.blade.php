@@ -16,7 +16,7 @@
                 <a href="#" class="block px-4 py-2 hover:bg-indigo-600 hover:text-white rounded">Data Mahasiswa</a>
                 <a href="#" class="block px-4 py-2 hover:bg-indigo-600 hover:text-white rounded">Pengajuan</a>
             @elseif( $sample ->role == 'mahasiswa')
-                <a href="#" class="block px-4 py-2 hover:bg-indigo-600 hover:text-white rounded">Dashboard</a>
+                <a href="Dosen.index" class="block px-4 py-2 hover:bg-indigo-600 hover:text-white rounded">Dashboard</a>
                 <a href="#" class="block px-4 py-2 hover:bg-indigo-600 hover:text-white rounded">My Classes</a>
             @endif
         </nav>

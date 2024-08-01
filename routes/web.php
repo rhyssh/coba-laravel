@@ -1,8 +1,6 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MahasiswaController;
@@ -21,39 +19,37 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [LoginController::class, 'index'])->name('login');
-    Route::post('/login', [LoginController::class, 'authenticate']);
+// Comment out or remove the middleware for guest and auth for testing
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'authenticate']);
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::group(['prefix' => 'kaprodi'], function () {
+    Route::get('/', [KaprodiController::class, 'index'])->name('kaprodi');
+    Route::get('/create', [KaprodiController::class, 'create'])->name('kaprodi.create');
+    Route::post('/', [KaprodiController::class, 'store'])->name('kaprodi.store');
+    Route::get('/{id}', [KaprodiController::class, 'edit'])->name('kaprodi.edit');
+    Route::post('/update', [KaprodiController::class, 'update'])->name('kaprodi.update');
+    Route::delete('/{id}', [KaprodiController::class, 'delete'])->name('kaprodi.delete');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::group(['prefix' => 'dosen'], function () {
+    Route::get('/', [DosenController::class, 'index'])->name('dosen');
+    Route::get('/class', [DosenController::class, 'class'])->name('dosen.class');
+    Route::get('/create', [DosenController::class, 'create'])->name('dosen.create');
+    Route::post('/', [DosenController::class, 'store'])->name('dosen.store');
+    Route::get('/{id}', [DosenController::class, 'edit'])->name('dosen.edit');
+    Route::post('/update', [DosenController::class, 'update'])->name('dosen.update');
+    Route::delete('/{id}', [DosenController::class, 'delete'])->name('dosen.delete');
+});
 
-    Route::group(['prefix' => 'kaprodi'], function () {
-        Route::get('/', [KaprodiController::class, 'index'])->name('kaprodi');
-        Route::get('/create', [KaprodiController::class, 'create'])->name('kaprodi.create');
-        Route::post('/', [KaprodiController::class, 'store'])->name('kaprodi.store');
-        Route::get('/{id}', [KaprodiController::class, 'edit'])->name('kaprodi.edit');
-        Route::post('/update', [KaprodiController::class, 'update'])->name('kaprodi.update');
-        Route::delete('/{id}', [KaprodiController::class, 'delete'])->name('kaprodi.delete');
-    });
-
-    Route::group(['prefix' => 'dosen'], function () {
-        Route::get('/', [DosenController::class, 'index'])->name('dosen');
-        Route::get('/class', [DosenController::class, 'class'])->name('dosen.class');
-        Route::get('/create', [DosenController::class, 'create'])->name('dosen.create');
-        Route::post('/', [DosenController::class, 'store'])->name('dosen.store');
-        Route::get('/{id}', [DosenController::class, 'edit'])->name('dosen.edit');
-        Route::post('/update', [DosenController::class, 'update'])->name('dosen.update');
-        Route::delete('/{id}', [DosenController::class, 'delete'])->name('dosen.delete');
-    });
-
-    Route::group(['prefix' => 'mahasiswa'], function () {
-        Route::get('/', [MahasiswaController::class, 'index'])->name('mahasiswa');
-        Route::get('/create', [MahasiswaController::class, 'create'])->name('mahasiswa.create');
-        Route::post('/', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
-        Route::get('/{id}', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
-        Route::post('/update', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
-        Route::delete('/{id}', [MahasiswaController::class, 'delete'])->name('mahasiswa.delete');
-    });
+Route::group(['prefix' => 'mahasiswa'], function () {
+    Route::get('/', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
+    Route::get('/create', [MahasiswaController::class, 'create'])->name('mahasiswa.create');
+    Route::get('/mahasiswa/{id}', [MahasiswaController::class, 'show'])->name('mahasiswa.detail');
+    Route::post('/', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
+    Route::get('/{id}', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
+    Route::post('/mahasiswa/{id}/update', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
+    Route::delete('/{id}', [MahasiswaController::class, 'delete'])->name('mahasiswa.delete');
 });

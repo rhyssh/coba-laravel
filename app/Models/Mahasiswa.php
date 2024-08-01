@@ -9,7 +9,6 @@ class Mahasiswa extends Model
 {
     use HasFactory;
 
-    
     protected $fillable = [
         'user_id',
         'kelas_id',
@@ -17,12 +16,9 @@ class Mahasiswa extends Model
         'name',
         'tempat_lahir',
         'tanggal_lahir',
-        'edit',
     ];
 
-    protected $casts = [
-        'edit' => 'boolean',
-    ];
+    // Jika ada hubungan dengan model lain, Anda bisa mendefinisikannya di sini.
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -31,10 +27,5 @@ class Mahasiswa extends Model
     public function kelas()
     {
         return $this->belongsTo(Kelas::class);
-    }
-
-    public function requests()
-    {
-        return $this->hasMany(Request::class);
     }
 }
