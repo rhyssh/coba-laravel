@@ -1,6 +1,6 @@
 @php
-    $sample = (object)[
-        "role" => "dosen",
+    $sample =(object)[
+        "role" => "kaprodi",
     ]
 @endphp
 
