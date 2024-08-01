@@ -8,6 +8,6 @@ class KaprodiController extends Controller
 {
     public function index()
     {
-        return view('kaprodi');
+        return view('Kaprodi.index');
     }
 }

@@ -25,11 +25,6 @@ Route::get('/app', function () {
     return view('layout.app');
 });
 
-Route::get('/dashboardkaprodi', function () {
-    return view('Kaprodi.dashboard');
-});
-
-Route::get('/login', [LoginController::class, 'index']);
 Route::get('/overview', [OverviewController::class, 'index']);
 Route::get('/kaprodi', [KaprodiController::class, 'index']);
 Route::get('/dosen', [DosenController::class, 'index']);
@@ -58,3 +53,15 @@ Route::get('/editmhs', function () {
 Route::get('/pengajuanmhs', function () {
     return view('Dosen.pengajuanmhs');
 })->name('ajumhs');
+
+
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'authenticate']);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/dashboardkaprodi', [KaprodiController::class, 'index']);
+});
