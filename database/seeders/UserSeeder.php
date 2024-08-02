@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
         //         'username' => 'dosenwali0' . $i,
         //         'email' => 'dosenwali0' . $i . '@example.com',
         //         'password' => Hash::make('dosenwali').$i,
-        //         'role' => 'dosen wali',
+        //         'role' => 'dosen-wali',
         //     ]);
         // }
 
@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
             'username' => 'faris',
             'email' => 'doswal@example.com',
             'password' => Hash::make('doswal123'),
-            'role' => 'dosen wali',
+            'role' => 'dosen-wali',
         ]);
 
         // Mahasiswa

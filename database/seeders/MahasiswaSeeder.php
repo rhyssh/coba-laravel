@@ -13,8 +13,8 @@ class MahasiswaSeeder extends Seeder
      */
     public function run(): void
     {
-        // Mahasiswa
-        // for ($i = 1; $i <= 20; $i++) {
+        // //Mahasiswa
+        // for($i = 1; $i <= 20; $i++) {
         //     Mahasiswa::create([
         //         'user_id' => 6 + $i,
         //         'kelas_id' => ($i <= 10) ? 1 : 2,

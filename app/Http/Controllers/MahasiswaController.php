@@ -70,4 +70,9 @@ class MahasiswaController extends Controller
 
         return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa deleted successfully.');
     }
+
+    public function show() {
+        
+        return view('Mahasiswa.dashboard');
+    }
 }
