@@ -28,11 +28,11 @@ Route::middleware('auth')->group(function () {
 
             Route::group(['prefix' => 'dosen'], function () {
                 Route::get('/', [KaprodiController::class, 'dosenIndex'])->name('kaprodi.dosen.index');
-                Route::get('/create', [KaprodiController::class, 'dosenCreate'])->name('kaprodi.dosen.create');
-                Route::post('/', [KaprodiController::class, 'dosenStore'])->name('kaprodi.dosen.store');
-                Route::get('/{id}', [KaprodiController::class, 'dosenEdit'])->name('kaprodi.dosen.edit');
-                Route::post('/update', [KaprodiController::class, 'dosenUpdate'])->name('kaprodi.dosen.update');
-                Route::delete('/{id}', [KaprodiController::class, 'dosenDelete'])->name('kaprodi.dosen.delete');
+                Route::get('/create', [DosenController::class, 'dosenCreate'])->name('kaprodi.dosen.create');
+                Route::post('/', [DosenController::class, 'dosenStore'])->name('kaprodi.dosen.store');
+                Route::get('/{id}', [DosenController::class, 'dosenEdit'])->name('kaprodi.dosen.edit');
+                Route::post('/dosen/{id}/update', [DosenController::class, 'dosenUpdate'])->name('kaprodi.dosen.update');
+                Route::delete('/{id}', [DosenController::class, 'dosenDelete'])->name('kaprodi.dosen.delete');
             });
 
             Route::group(['prefix' => 'class'], function () {
@@ -90,6 +90,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/request/edit', [MahasiswaController::class, 'submitRequestEdit'])->name('mahasiswa.submit.request.edit');
         });
     // });
+
 });
 Route::get('/dashboard', function () {
     return view('Kaprodi.dashboard');
