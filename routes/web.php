@@ -123,7 +123,6 @@ Route::get('/create-dosen', function () {
     return view('Kaprodi.createDosen');
 })->name('kaprodi.createDosen');
 Route::get('/login', [LoginController::class, 'index']);
-Route::get('/overview', [OverviewController::class, 'index']);
 Route::get('/kaprodi', [KaprodiController::class, 'index']);
 Route::get('/dosen', [DosenController::class, 'index']);
 Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
