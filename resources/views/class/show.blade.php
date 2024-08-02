@@ -30,26 +30,26 @@
 
 
 <div class="flex flex-col items-center gap-10 md:flex-row sm:mx-10">
-    <div class="flex-1 bg-white p-6 rounded-lg border-2 border-indigo-700 shadow-md">
-        <h3 class="text-indigo-600 mt-1 font-semibold text-xl text-center">Data Kelas</h3>
-        <h1 class="text-3xl font-bold mb-3">Kelas 1-A</h1>
+    <div class="flex-1 p-6 bg-white border-2 border-indigo-700 rounded-lg shadow-md">
+        <h3 class="mt-1 text-xl font-semibold text-center text-indigo-600">Data Kelas</h3>
+        <h1 class="mb-3 text-3xl font-bold">Kelas 1-A</h1>
         <div class="flex flex-row mb-3">
-            <h2 class="text-xl font-normal mr-1">Dosen Wali: </h2>
-            <a href="{{ route('kaprodi.dosen') }}" class="text-xl font-medium hover:underline">Jumanto</a>
+            <h2 class="mr-1 text-xl font-normal">Dosen Wali: </h2>
+            <a href="{{ route('kaprodi.dosen.index') }}" class="text-xl font-medium hover:underline">Jumanto</a>
         </div>
         <h3 class="text-lg font-medium">Jumlah Mahasiswa: {{ $jmlh_mhs }}/10</h3>
-        <table class="table-auto w-full border-collapse mb-5">
+        <table class="w-full mb-5 border-collapse table-auto">
             <thead>
                 <tr class="border">
-                    <th class="text-start border py-2 px-1">No.</th>
-                    <th class="text-start border py-2 px-1">Mahasiswa</th>
-                    <th class="text-start border py-2 px-1">NIM</th>
+                    <th class="px-1 py-2 border text-start">No.</th>
+                    <th class="px-1 py-2 border text-start">Mahasiswa</th>
+                    <th class="px-1 py-2 border text-start">NIM</th>
                 </tr>
             </thead>
             <tbody>
             @foreach ($mhss as $mhs)
             <tr class="border border-gray-300">
-                <td class="border py-2 px-1">{{ $i }}.</td>
+                <td class="px-1 py-2 border">{{ $i }}.</td>
                 <td class="pl-2 border">{{ $mhs->nama }}</td>
                 <td class="pl-2 border">{{ $mhs->nim }}</td>
             </tr>
