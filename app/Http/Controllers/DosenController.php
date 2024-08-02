@@ -10,15 +10,19 @@ use Illuminate\Support\Facades\Hash;
 
 class DosenController extends Controller
 {
-    public function showDosen()
+    public function dashboard() {
+        return view('dosen._dashboard');
+    }
+
+    public function dosenIndex()
     {
-        $dosens = Dosen::all();
-        return view('kaprodi.dosenIndex', compact('dosens'));
+        $dosen = Dosen::all();
+        return view('dosen.index', compact('dosen'));
     }
 
     public function dosenCreate()
     {
-        return view('kaprodi.dosenCreate');
+        return view('dosen.create');
     }
 
     public function dosenStore(Request $request)
@@ -35,7 +39,7 @@ class DosenController extends Controller
             'username' => $request->name,
             'email' => $request->name . '@example.com', // Replace with actual email logic
             'password' => Hash::make('password'), // Replace with actual password logic
-            'role' => 'dosen wali',
+            'role' => 'dosen-wali',
         ]);
 
         // Create new dosen with the created user's ID
@@ -50,13 +54,13 @@ class DosenController extends Controller
         $user->save();
         $dosen->save();
 
-        return redirect()->route('kaprodi.dosen.index');
+        return redirect()->route('dosen.index');
     }
 
     public function dosenEdit($id)
     {
         $dosen = Dosen::findOrFail($id);
-        return view('kaprodi.dosenEdit', compact('dosen'));
+        return view('dosen.edit', compact('dosen'));
     }
 
     public function dosenUpdate(Request $request, $id)
@@ -73,13 +77,13 @@ class DosenController extends Controller
 
         $dosen->update($request->all());
 
-        return redirect()->route('kaprodi.dosen.index');
+        return redirect()->route('dosen.index');
     }
 
     public function dosenDelete($id)
     {
         $dosen = Dosen::findOrFail($id);
         $dosen->delete();
-        return redirect()->route('kaprodi.dosen.index');
+        return redirect()->route('dosen.index');
     }
 }
