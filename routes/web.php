@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\FakeDataMk;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\DosenController;
@@ -151,3 +152,21 @@ Route::get('/editmhs', function () {
 Route::get('/pengajuanmhs', function () {
     return view('Dosen.pengajuanmhs');
 })->name('ajumhs');
+
+//mahasiswa 
+Route::get('/dashboardmahasiswa', function () {
+    return view('Mahasiswa.dashboard');
+})->name('mhs.dashboard');
+
+Route::get('/kelas', function () {
+    return view('Mahasiswa.kelas');
+})->name('mhs.kelas');
+Route::get('/edit-data', function () {
+    return view('Mahasiswa.edit');
+})->name('mhs.edit-data');
+
+Route::get('/mata-kuliah/{id}', function ($id) {
+    return view('Mahasiswa.detailMk', [
+        "data" => FakeDataMk::getById($id),
+    ]);
+})->name('mhs.detailMk');
