@@ -15,18 +15,7 @@
 @endphp
 @section('title', 'Mahasiswa Dashboard')
 @section('content')
-    <h2 class="text-2xl font-semibold text-indigo-600 mb-6">Edit Data</h2>
-    <div class="py-3 pb-5 px-3 mx-1 min-[360px]:mx-3 my-4 mb-5 bg-white rounded-xl shadow-lg">
-        <h3 class="text-indigo-600 mt-5 font-semibold text-xl text-center">Data Diri</h3>
-        <form class="space-y-3 " action="">
-            <div class="flex flex-col">
-                <label for="nama">Nama</label>
-                <input class="border border-gray-300 h-10 rounded-md px-2" type="text" name="nama" id="nama"
-                    value="{{ $data->nama }}">
-            </div>
-            <div class="flex flex-col">
-                <label for="ttl">Tempat, Tanggal Lahir</label>
-                <input class="border border-gray-300 h-10 rounded-md px-2" type="date" name="ttl" id="ttl">
+
             </div>
             <div class="flex flex-col">
                 <label for="jurusan">Jurusan</label>
