@@ -12,51 +12,62 @@ class DosenController extends Controller
 {
     public function showDosen()
     {
-        $dosens = Dosen::all();
-        return view('kaprodi.dosenIndex', compact('dosens'));
+        $dosen = Dosen::all();
+        $dosen = Dosen::with('kelas')->get();
+        return view('kaprodi.dosenIndex', compact('dosen'));
     }
 
     public function dosenCreate()
     {
-        return view('kaprodi.dosenCreate');
+        $kelas = Kelas::all();
+        return view('kaprodi.dosenCreate', compact('kelas'));
     }
 
     public function dosenStore(Request $request)
     {
         $request->validate([
-            'kelas_id' => 'nullable|unique:dosens,kelas_id|exists:kelas,id',
+            'kelas_id' => 'nullable|exists:kelas,id', // Boleh null dan mengecek yang sudah ada
             'kode_dosen' => 'required|unique:dosens,kode_dosen',
             'nip' => 'required|unique:dosens,nip',
             'name' => 'required',
         ]);
-
-        // Create new user with role 'dosen wali'
+    
+        // Check if the selected kelas already has a dosen
+        if ($request->kelas_id) {
+            $existingDosen = Dosen::where('kelas_id', $request->kelas_id)->first();
+            
+            if ($existingDosen) {
+                return redirect()->back()->with('error', 'Kelas sudah punya dosen wali')->withInput();
+            }
+        }
+    
+        // otomatis rolenya dosen wali
         $user = User::create([
             'username' => $request->name,
-            'email' => $request->name . '@example.com', // Replace with actual email logic
-            'password' => Hash::make('password'), // Replace with actual password logic
+            'email' => $request->name . '@example.com', // EMAIL DUMMY UNTUK TESTING
+            'password' => Hash::make('password'), // PASSWORD DUMMY UNTUK TESTING 
             'role' => 'dosen wali',
         ]);
-
-        // Create new dosen with the created user's ID
-        $dosen = Dosen::create([
+    
+        // Buat dosen baru
+        Dosen::create([
             'user_id' => $user->id,
             'kelas_id' => $request->kelas_id,
             'kode_dosen' => $request->kode_dosen,
             'nip' => $request->nip,
             'name' => $request->name,
         ]);
-
-        $user->save();
-        $dosen->save();
-
-        return redirect()->route('kaprodi.dosen.index');
-    }
+    
+        return redirect()->route('kaprodi.dosen.index')->with('success', 'Dosen berhasil ditambahkan');
+    }    
 
     public function dosenEdit($id)
     {
+        // fetch kelas buat ngambil data semua kelas yg ada di db
+        $kelas = Kelas::all();
+
         $dosen = Dosen::findOrFail($id);
-        return view('kaprodi.dosenEdit', compact('dosen'));
+        return view('kaprodi.dosenEdit', compact('dosen', 'kelas'));
     }
 
     public function dosenUpdate(Request $request, $id)

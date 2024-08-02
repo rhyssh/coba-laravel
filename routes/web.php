@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\KelasController;
 
 // Redirect to login if visiting the root URL
 Route::get('/', function () {
@@ -27,12 +28,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [KaprodiController::class, 'index'])->name('kaprodi.index');
 
             Route::group(['prefix' => 'dosen'], function () {
-                Route::get('/', [KaprodiController::class, 'dosenIndex'])->name('kaprodi.dosen.index');
-                Route::get('/create', [DosenController::class, 'dosenCreate'])->name('kaprodi.dosen.create');
-                Route::post('/', [DosenController::class, 'dosenStore'])->name('kaprodi.dosen.store');
-                Route::get('/{id}', [DosenController::class, 'dosenEdit'])->name('kaprodi.dosen.edit');
-                Route::post('/dosen/{id}/update', [DosenController::class, 'dosenUpdate'])->name('kaprodi.dosen.update');
-                Route::delete('/{id}', [DosenController::class, 'dosenDelete'])->name('kaprodi.dosen.delete');
+                Route::get('/', [DosenController::class, 'showDosen'])->name('kaprodi.dosen.index');
                 Route::get('/create', [DosenController::class, 'dosenCreate'])->name('kaprodi.dosen.create');
                 Route::post('/', [DosenController::class, 'dosenStore'])->name('kaprodi.dosen.store');
                 Route::get('/{id}', [DosenController::class, 'dosenEdit'])->name('kaprodi.dosen.edit');
@@ -41,12 +37,15 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::group(['prefix' => 'class'], function () {
-                Route::get('/', [KaprodiController::class, 'classIndex'])->name('kaprodi.class.index');
-                Route::get('/create', [KaprodiController::class, 'classCreate'])->name('kaprodi.class.create');
-                Route::post('/', [KaprodiController::class, 'classStore'])->name('kaprodi.class.store');
-                Route::get('/{id}', [KaprodiController::class, 'classEdit'])->name('kaprodi.class.edit');
-                Route::post('/update', [KaprodiController::class, 'classUpdate'])->name('kaprodi.class.update');
-                Route::delete('/{id}', [KaprodiController::class, 'classDelete'])->name('kaprodi.class.delete');
+                Route::get('/', [KelasController::class, 'kelasIndex'])->name('kaprodi.class.index');
+                Route::get('/create', [KelasController::class, 'kelasCreate'])->name('kaprodi.class.create');
+                Route::post('/', [KelasController::class, 'kelasStore'])->name('kaprodi.class.store');
+                Route::get('/{id}', [KelasController::class, 'showKelas'])->name('kaprodi.class.detail');
+                Route::get('/{id}/edit', [KelasController::class, 'kelasEdit'])->name('kaprodi.class.edit');
+                Route::put('/class/{id}/update', [KelasController::class, 'kelasUpdate'])->name('kaprodi.class.update');
+                Route::delete('/{id}', [KelasController::class, 'kelasDelete'])->name('kaprodi.class.destroy');
+                // Route::post('{kelas}/add-student/{mahasiswa}', [KelasController::class, 'addStudent'])->name('kaprodi.class.addStudent');
+                // Route::delete('{kelas}/remove-student/{mahasiswa}', [KelasController::class, 'removeStudent'])->name('kaprodi.class.removeStudent');
             });
         });
     // });
@@ -98,122 +97,3 @@ Route::middleware('auth')->group(function () {
 
 
 });
-Route::get('/dashboard', function () {
-    return view('Kaprodi.dashboard');
-})->name('kaprodi.dashboard');
-
-Route::get('/dosen', function () {
-    return view('Kaprodi.dosen');
-});
-
-Route::get('/detail-dosen', function () {
-    return view('Kaprodi.detailDosen');
-})->name('kaprodi.dosen');
-
-Route::get('/detail-class', function () {
-    return view('Kaprodi.classDetail');
-})->name('kaprodi.class');
-
-Route::get('/edit-dosen', function () {
-    return view('Kaprodi.editDosen');
-})->name('kaprodi.editdosen');
-
-Route::get('/edit-class', function () {
-    return view('Kaprodi.editClass');
-})->name('kaprodi.editclass');
-
-Route::get('/create-class', function () {
-    return view('Kaprodi.createClass');
-})->name('kaprodi.createClass');
-
-Route::get('/create-dosen', function () {
-    return view('Kaprodi.createDosen');
-})->name('kaprodi.createDosen');
-Route::get('/login', [LoginController::class, 'index']);
-Route::get('/kaprodi', [KaprodiController::class, 'index']);
-Route::get('/dosen', [DosenController::class, 'index']);
-Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
-
-Route::get('/dashboarddosen', function () {
-    return view('Dosen.dashboard');
-});
-
-Route::get('/detailclass', function () {
-    return view('Dosen.class_detail');
-})->name('detail.class');
-
-Route::get('/datamahasiswa', function () {
-    return view('Dosen.datamhs');
-});
-
-Route::get('/detailmhs', function () {
-    return view('Dosen.detailmhs');
-})->name('detailmhs');
-
-Route::get('/editmhs', function () {
-    return view('Dosen.editdatamhs');
-})->name('editmhs');
-
-Route::get('/pengajuanmhs', function () {
-    return view('Dosen.pengajuanmhs');
-})->name('ajumhs');
-Route::get('/dashboard', function () {
-    return view('Kaprodi.dashboard');
-})->name('kaprodi.dashboard');
-
-Route::get('/dosen', function () {
-    return view('Kaprodi.dosen');
-});
-
-Route::get('/detail-dosen', function () {
-    return view('Kaprodi.detailDosen');
-})->name('kaprodi.dosen');
-
-Route::get('/detail-class', function () {
-    return view('Kaprodi.classDetail');
-})->name('kaprodi.class');
-
-Route::get('/edit-dosen', function () {
-    return view('Kaprodi.editDosen');
-})->name('kaprodi.editdosen');
-
-Route::get('/edit-class', function () {
-    return view('Kaprodi.editClass');
-})->name('kaprodi.editclass');
-
-Route::get('/create-class', function () {
-    return view('Kaprodi.createClass');
-})->name('kaprodi.createClass');
-
-Route::get('/create-dosen', function () {
-    return view('Kaprodi.createDosen');
-})->name('kaprodi.createDosen');
-
-Route::get('/login', [LoginController::class, 'index']);
-Route::get('/kaprodi', [KaprodiController::class, 'index']);
-Route::get('/dosen', [DosenController::class, 'index']);
-Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
-
-Route::get('/dashboarddosen', function () {
-    return view('Dosen.dashboard');
-});
-
-Route::get('/detailclass', function () {
-    return view('Dosen.class_detail');
-})->name('detail.class');
-
-Route::get('/datamahasiswa', function () {
-    return view('Dosen.datamhs');
-});
-
-Route::get('/detailmhs', function () {
-    return view('Dosen.detailmhs');
-})->name('detailmhs');
-
-Route::get('/editmhs', function () {
-    return view('Dosen.editdatamhs');
-})->name('editmhs');
-
-Route::get('/pengajuanmhs', function () {
-    return view('Dosen.pengajuanmhs');
-})->name('ajumhs');

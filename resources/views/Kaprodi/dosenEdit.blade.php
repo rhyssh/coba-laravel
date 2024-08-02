@@ -8,30 +8,35 @@
 
     <form action="{{ route('kaprodi.dosen.update', $dosen->id) }}" method="POST" class="max-w-lg mx-auto">
         @csrf
-        
+
         <div class="mb-4">
-            <label for="user_id" class="block text-gray-700 text-sm font-bold mb-2">User ID:</label>
-            <input type="text" name="user_id" id="user_id" value="{{ $dosen->user_id }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <input type="hidden" name="user_id" id="user_id" value="{{ $dosen->user_id }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
 
         <div class="mb-4">
-            <label for="kelas_id" class="block text-gray-700 text-sm font-bold mb-2">Kelas ID:</label>
-            <input type="text" name="kelas_id" id="kelas_id" value="{{  $dosen->kelas_id }}"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <label for="kelas_id" class="block text-gray-700 text-sm font-bold mb-2">Kelas:</label>
+            <select name="kelas_id" id="kelas_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @foreach ($kelas as $k)
+                    <option value="{{ $k->id }}" {{ $dosen->kelas_id == $k->id ? 'selected' : '' }}>
+                        {{ $k->id }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
         <div class="mb-4">
-            <label for="kelas_id" class="block text-gray-700 text-sm font-bold mb-2">Kode Dosen:</label>
-            <input type="text" name="kode_dosen" id="kode_dosen" value="{{ $dosen->kode_dosen }}"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <label for="kode_dosen" class="block text-gray-700 text-sm font-bold mb-2">Kode Dosen:</label>
+            <input type="text" name="kode_dosen" id="kode_dosen" value="{{ $dosen->kode_dosen }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
 
         <div class="mb-4">
             <label for="nip" class="block text-gray-700 text-sm font-bold mb-2">NIP:</label>
-            <input type="text" name="nip" id="nip" value="{{  $dosen->nip }}" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <input type="text" name="nip" id="nip" value="{{ $dosen->nip }}" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
 
         <div class="mb-4">
             <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nama:</label>
-            <input type="text" name="name" id="name" value="{{  $dosen->name }}" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <input type="text" name="name" id="name" value="{{ $dosen->name }}" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
 
         <div class="flex items-center justify-between">

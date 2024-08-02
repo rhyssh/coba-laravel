@@ -12,7 +12,7 @@
                 <tr>
                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm leading-4 text-gray-700">ID</th>
                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm leading-4 text-gray-700">User ID</th>
-                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm leading-4 text-gray-700">Kelas ID</th>
+                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm leading-4 text-gray-700">Nama Kelas</th>
                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm leading-4 text-gray-700">Kode Dosen</th>
                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm leading-4 text-gray-700">NIP</th>
                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left text-sm leading-4 text-gray-700">Nama</th>
@@ -24,7 +24,9 @@
                 <tr>
                     <td class="py-2 px-4 border-b border-gray-300">{{ $d->id }}</td>
                     <td class="py-2 px-4 border-b border-gray-300">{{ $d->user_id }}</td>
-                    <td class="py-2 px-4 border-b border-gray-300">{{ $d->kelas_id }}</td>
+                    <td class="py-2 px-4 border-b border-gray-300">
+                        {{ $d->kelas ? $d->kelas->nama : 'Belum ada kelas' }}
+                    </td>
                     <td class="py-2 px-4 border-b border-gray-300">{{ $d->kode_dosen }}</td>
                     <td class="py-2 px-4 border-b border-gray-300">{{ $d->nip }}</td>
                     <td class="py-2 px-4 border-b border-gray-300">{{ $d->name }}</td>

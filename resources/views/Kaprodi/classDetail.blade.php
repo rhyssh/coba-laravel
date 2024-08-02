@@ -1,63 +1,48 @@
-@php
-    //contoh data
-    $mhss = [(object)[
-        'nama'=>'Asep Kopling',
-        'nim'=>'0001',],
-        (object)[
-        'nama'=>'Ujang Knalpot',
-        'nim'=>'0010',],
-        (object)[
-        'nama'=>'Riski Tromol',
-        'nim'=>'0011',],
-        (object)[
-        'nama'=>'Dimas Kastrol',
-        'nim'=>'0100',],
-        (object)[
-        'nama'=>'Putra Minang',
-        'nim'=>'0101',],
-        (object)[
-        'nama'=>'Supri Spakbor',
-        'nim'=>'0110',],];
-    $i=1;
-    $jmlh_mhs=6;
-@endphp
-
 @extends('layout.master')
 
-@section('title', 'Kaprodi Dashboard')
+@section('title', 'Detail Kelas')
 
 @section('content')
+    <h1 class="text-2xl font-semibold mb-6">Detail Kelas: {{ $kelas->nama }}</h1> {{-- UNTUK MENDAPATKAN NAMA KELAS --}}
 
+    @if($dosens->isNotEmpty())
+        <h1 class="text-2xl font-semibold mb-6">Dosen Wali Kelas: {{ $dosens->first()->name }}</h1> {{-- DOSEN WALI --}}
+    @else
+        <h1 class="text-2xl font-semibold mb-6 text-red-700">Dosen Wali Kelas: Tidak Ada Dosen Wali Untuk Kelas Ini!</h1>
+    @endif
 
-<div class="flex flex-col items-center gap-10 md:flex-row sm:mx-10">
-    <div class="flex-1 bg-white p-6 rounded-lg border-2 border-indigo-700 shadow-md">
-        <h3 class="text-indigo-600 mt-1 font-semibold text-xl text-center">Data Kelas</h3>
-        <h1 class="text-3xl font-bold mb-3">Kelas 1-A</h1>
-        <div class="flex flex-row mb-3">
-            <h2 class="text-xl font-normal mr-1">Dosen Wali: </h2>
-            <a href="{{ route('kaprodi.dosen') }}" class="text-xl font-medium hover:underline">Jumanto</a>
+    <div class="bg-white p-6 rounded-lg border-2 border-indigo-700 shadow-md">
+        <h2 class="text-xl font-semibold mb-4 text-indigo-700">Daftar Mahasiswa</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">No</th>
+                        <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">Nama Mahasiswa</th>
+                        <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">NIM</th>
+                    </tr>
+                </thead>
+
+                {{-- TABEL DAFTAR MAHASISWA --}}
+
+                <tbody>
+                    @forelse ($mahasiswas as $index => $mahasiswa)
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">{{ $index + 1 }}</td> {{-- NOMOR INDEKS --}}
+                            <td class="py-2 px-4 border-b border-gray-200">{{ $mahasiswa->name }}</td> {{-- NAMA MAHASISWA --}}
+                            <td class="py-2 px-4 border-b border-gray-200">{{ $mahasiswa->nim }}</td> {{-- NIM MAHASISWA --}}
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" class="py-2 px-4 border-b border-gray-200 text-center">Tidak ada mahasiswa terdaftar</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
-        <h3 class="text-lg font-medium">Jumlah Mahasiswa: {{ $jmlh_mhs }}/10</h3>
-        <table class="table-auto w-full border-collapse mb-5">
-            <thead>
-                <tr class="border">
-                    <th class="text-start border py-2 px-1">No.</th>
-                    <th class="text-start border py-2 px-1">Mahasiswa</th>
-                    <th class="text-start border py-2 px-1">NIM</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($mhss as $mhs)
-            <tr class="border border-gray-300">
-                <td class="border py-2 px-1">{{ $i }}.</td>
-                <td class="pl-2 border">{{ $mhs->nama }}</td>
-                <td class="pl-2 border">{{ $mhs->nim }}</td>
-            </tr>
-            <?php $i++ ?>
-            @endforeach
-            </tbody>
-        </table>
-        <x-edit-del></x-edit-del>
+
+        <div class="mt-4">
+            <p class="text-lg font-semibold">Jumlah Mahasiswa: {{ $mahasiswas->count() }} / {{ $capacity }}</p> {{-- Jumlah Mahasiswa dan Kapasitas Kelas --}}
+        </div>
     </div>
-</div>
 @endsection
