@@ -22,5 +22,13 @@ class DosenSeeder extends Seeder
                 'name' => 'Dosen Wali -' . $i,
             ]);
         }
+
+        // Dosen::create([
+        //     'user_id' => 1,
+        //     'kelas_id' => 1,
+        //     'kode_dosen' => '101',
+        //     'nip' => '123450001',
+        //     'name' => 'Dosen Wali 1',
+        // ]);
     }
 }

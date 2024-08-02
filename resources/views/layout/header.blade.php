@@ -11,7 +11,10 @@
             {{ $sample->role == 'mahasiswa' ? 'Dashboard Mahasiswa' : 'Sistem Pendataan Mahasiswa' }}</h1>
         <nav class="flex space-x-4 ml-auto items-center ">
             <h1 class="hidden xs:inline-flex font-semibold">Nama {{ $sample->role == 'mahasiswa' ? 'Mahasiswa' : 'Dosen' }}</h1>
-            <a href="#" class="hover:bg-indigo-700 px-3 py-2 rounded">Logout</a>
+            <form action="/logout" method="POST">
+                @csrf
+                <button type="submit" class="hover:bg-indigo-700 px-3 py-2 rounded">Logout</button>
+            </form>
         </nav>
     </div>
 </header>

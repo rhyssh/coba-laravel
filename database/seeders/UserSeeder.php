@@ -16,9 +16,9 @@ class UserSeeder extends Seeder
     {
         // Kaprodi
         User::create([
-            'username' => 'kaprodi',
+            'username' => 'alamsyah',
             'email' => 'kaprodi@example.com',
-            'password' => 'kaprodi123',
+            'password' => Hash::make('kaprodi123'),
             'role' => 'kaprodi',
         ]);
 
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             User::create([
                 'username' => 'dosenwali0' . $i,
                 'email' => 'dosenwali0' . $i . '@example.com',
-                'password' => 'dosenwali'.$i,
+                'password' => Hash::make('dosenwali').$i,
                 'role' => 'dosen wali',
             ]);
         }
@@ -37,9 +37,25 @@ class UserSeeder extends Seeder
             User::create([
                 'username' => 'mahasiswa00' . $i,
                 'email' => 'mahasiswa00' . $i . '@example.com',
-                'password' => 'mahasiswa'.$i,
+                'password' => Hash::make('mahasiswa').$i,
                 'role' => 'mahasiswa',
             ]);
         }
+
+        // // Dosen Wali
+        // User::create([
+        //     'username' => 'faris',
+        //     'email' => 'doswal@example.com',
+        //     'password' => Hash::make('doswal123'),
+        //     'role' => 'dosen wali',
+        // ]);
+
+        // // Mahasiswa
+        // User::create([
+        //     'username' => 'wowi',
+        //     'email' => 'mahasiswa@example.com',
+        //     'password' => Hash::make('mahasiswa123'),
+        //     'role' => 'mahasiswa',
+        // ]);
     }
 }
