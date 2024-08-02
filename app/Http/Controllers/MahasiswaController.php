@@ -30,5 +30,10 @@ class MahasiswaController extends Controller
     public function delete() {
         
     }
+
+    public function show() {
+        
+        return view('Mahasiswa.dashboard');
+    }
 }
 
