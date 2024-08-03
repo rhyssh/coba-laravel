@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     // Routes for Kaprodi
-    // Route::middleware('role:kaprodi')->group(function () {
+    Route::middleware(['must-kaprodi'])->group(function () {
         Route::group(['prefix' => 'kaprodi'], function () {
             Route::get('/', [KaprodiController::class, 'index'])->name('kaprodi.index');
 
@@ -56,10 +56,10 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/{id}', [KaprodiController::class, 'classDelete'])->name('kaprodi.class.delete');
             });
         });
-    // });
+    });
 
     // Routes for Dosen
-    // Route::middleware('role:dosen')->group(function () {
+    Route::middleware(['must-dosenwali'])->group(function () {
         Route::group(['prefix' => 'dosenwali'], function () {
             Route::get('/', [DosenController::class, 'dashboard'])->name('dosen.index');
 
@@ -93,9 +93,10 @@ Route::middleware('auth')->group(function () {
                 Route::post('/reject/{requestId}', [DosenController::class, 'rejectRequest'])->name('dosen.requests.reject');
             });
         });
-    // });
+    });
+
     // Routes for Mahasiswa
-    // Route::middleware('role:mahasiswa')->group(function () {
+    Route::middleware(['must-mahasiswa'])->group(function () {
         Route::group(['prefix' => 'mahasiswa'], function () {
             Route::get('/', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
         
@@ -106,7 +107,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/request/edit', [MahasiswaController::class, 'requestEdit'])->name('mahasiswa.request.edit');
             Route::post('/request/edit', [MahasiswaController::class, 'submitRequestEdit'])->name('mahasiswa.submit.request.edit');
         });
-    // });
+    });
 });
 
 Route::get('/dashboarddosen', function () {
