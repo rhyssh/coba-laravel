@@ -30,6 +30,8 @@ class DosenController extends Controller
             'kode_dosen' => 'required|unique:dosens,kode_dosen',
             'nip' => 'required|unique:dosens,nip',
             'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
     
         // Check if the selected kelas already has a dosen
@@ -44,8 +46,8 @@ class DosenController extends Controller
         // otomatis rolenya dosen wali
         $user = User::create([
             'username' => $request->name,
-            'email' => $request->name . '@example.com', // EMAIL DUMMY UNTUK TESTING
-            'password' => Hash::make('password'), // PASSWORD DUMMY UNTUK TESTING 
+            'email' => $request->email . '@example.com', // EMAIL DUMMY UNTUK TESTING
+            'password' => Hash::make($request->password), // PASSWORD DUMMY UNTUK TESTING 
             'role' => 'dosen wali',
         ]);
     

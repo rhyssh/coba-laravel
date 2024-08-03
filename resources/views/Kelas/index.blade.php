@@ -38,12 +38,12 @@
                             @endif
                         </td>
                         <td class="py-2 px-4 border-b border-gray-200">
-                            <a href="{{ route('kaprodi.class.detail', $kelasItem->id) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
-                            <a href="{{ route('kaprodi.class.edit', $kelasItem->id) }}" class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
+                            <a href="{{ route('kaprodi.class.detail', $kelasItem->id) }}" class="text-indigo-600 hover:text-indigo-900 font-bold">Detail</a>
+                            <a href="{{ route('kaprodi.class.edit', $kelasItem->id) }}" class="text-indigo-600 hover:text-indigo-900 ml-4 font-bold">Edit</a>
                             <form action="{{ route('kaprodi.class.destroy', $kelasItem->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900 ml-4">Delete</button>
+                                <button type="submit" class="text-red-600 hover:text-red-900 ml-4 font-bold">Delete</button>
                             </form>
                         </td>
                     </tr>
