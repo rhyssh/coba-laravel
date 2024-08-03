@@ -41,6 +41,22 @@
                 @enderror
             </div>
 
+            <!-- Daftar Mahasiswa -->
+            <div class="mb-4">
+                <h4 class="text-lg font-semibold">Daftar Mahasiswa</h4>
+                <div class="space-y-2">
+                    @foreach ($mahasiswas as $mahasiswa)
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="mahasiswa_{{ $mahasiswa->id }}" name="mahasiswas[]" value="{{ $mahasiswa->id }}" class="mahasiswa-checkbox" data-mahasiswa-id="{{ $mahasiswa->id }}">
+                                <label for="mahasiswa_{{ $mahasiswa->id }}" class="ml-2 text-sm font-medium text-gray-700">{{ $mahasiswa->name }} ({{ $mahasiswa->nim }})</label>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <p id="selected-count" class="mt-2 text-sm font-medium text-gray-700">0/{{ old('jumlah', 10) }}</p>
+            </div>
+
             <!-- Submit Button -->
             <div class="flex gap-3 mt-8">
                 <a href="{{ route('kaprodi.class.index') }}" class="border border-indigo-700 text-indigo-700 font-semibold px-6 py-2 rounded-md hover:text-white hover:bg-indigo-800 transition duration-200 ease-in-out cursor-pointer">
@@ -53,4 +69,30 @@
         </form>
     </div>
 </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const checkboxes = document.querySelectorAll('.mahasiswa-checkbox');
+                const selectedCountElement = document.getElementById('selected-count');
+                const kapasitasInput = document.getElementById('kelas_capacity');
+                let kapasitas = kapasitasInput ? parseInt(kapasitasInput.value) : 10;
+        
+                function updateCount() {
+                    const selectedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+                    selectedCountElement.textContent = `${selectedCount}/${kapasitas}`;
+                }
+        
+                // Update count on checkbox change
+                checkboxes.forEach(checkbox => checkbox.addEventListener('change', updateCount));
+        
+                // Update kapasitas on input change
+                kapasitasInput.addEventListener('input', function () {
+                    kapasitas = parseInt(kapasitasInput.value) || 10;
+                    updateCount();
+                });
+        
+                // Initialize count
+                updateCount();
+            });
+        </script>
+
 @endsection

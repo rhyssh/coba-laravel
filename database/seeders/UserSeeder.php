@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
         }
 
         // Mahasiswa
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 34; $i++) {
             User::create([
                 'username' => 'mahasiswa00' . $i,
                 'email' => 'mahasiswa00' . $i . '@example.com',

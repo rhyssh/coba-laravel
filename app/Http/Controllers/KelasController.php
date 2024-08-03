@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Kelas;
 use App\Models\Mahasiswa;
 use App\Models\Dosen;
+use Illuminate\Support\Facades\Validator;
 
 class KelasController extends Controller
 {
@@ -14,9 +15,11 @@ class KelasController extends Controller
     {
         // Ambil semua kelas beserta mahasiswa yang terdaftar di masing-masing kelas
         $kelas = Kelas::with('dosen')->get();
+        $mahasiswas = Mahasiswa::whereNull( 'kelas_id' )->get();
+        $dosens = Dosen::doesntHave( 'kelas' )->get();
 
         // Kembalikan view dengan data kelas dan mahasiswas
-        return view('Kelas.index', compact('kelas'));
+        return view('Kelas.index', compact('kelas', 'mahasiswas', 'dosens'));
     }
 
     public function showKelas($id)
@@ -44,84 +47,128 @@ class KelasController extends Controller
     
     public function kelasCreate()
     {  
-        $dosens = Dosen::all();
-        return view('kaprodi.createClass', compact('dosens'));
+        $kelas = Kelas::all();
+        $dosens = Dosen::doesntHave('kelas')->get();
+        $mahasiswas = Mahasiswa::whereNull('kelas_id')->get();
+        $selectedMahasiswa = session('selectedMahasiswa', []);
+
+        return view('kaprodi.createClass', compact('kelas', 'dosens', 'mahasiswas', 'selectedMahasiswa'));
     }
 
     public function kelasStore(Request $request)
     {
-         // Validate the incoming request data
-         $request->validate([
+            // Validate request data
+        $request->validate([
             'nama' => 'required|string|max:255',
-            'jumlah' => 'required|integer|min:1',
+            'jumlah' => 'required|integer',
             'dosen_id' => 'nullable|exists:dosens,id',
+            'mahasiswas' => 'array',
+            'mahasiswas.*' => 'exists:mahasiswas,id',
         ]);
 
-        // Create a new Kelas instance
+        // Get the number of mahasiswa to be added
+        $mahasiswaIds = $request->input('mahasiswas', []);
+        $numberOfMahasiswa = count($mahasiswaIds);
+
+        // Check if the number of mahasiswa exceeds the class capacity
+        if ($numberOfMahasiswa > $request->input('jumlah')) {
+            return redirect()->back()->withErrors([
+                'mahasiswas' => 'Jumlah mahasiswa yang didaftarkan tidak boleh melebihi kapasitas kelas.'
+            ])->withInput();
+        }
+
+        // Create Kelas
         $kelas = Kelas::create([
             'nama' => $request->input('nama'),
             'jumlah' => $request->input('jumlah'),
+            'dosen_id' => $request->input('dosen_id') ?: null,
         ]);
 
-        // Assign dosen_id to the kelas
-        if ($request->input('dosen_id')) {
-            $dosen = Dosen::findOrFail($request->input('dosen_id'));
-            $kelas->dosenWali()->associate($dosen);
-            $kelas->save();
+        // Assign Mahasiswa to Kelas
+        if ($numberOfMahasiswa > 0) {
+            Mahasiswa::whereIn('id', $mahasiswaIds)->update(['kelas_id' => $kelas->id]);
         }
 
-        // Redirect back to the index route with a success message
-        return redirect()->route('kaprodi.class.index')->with('success', 'Kelas created successfully!');
+        return redirect()->route('kaprodi.class.index')->with('success', 'Kelas berhasil dibuat!');
     }
+
+    // public function addStudent(Request $request)
+    // {
+    //     $mahasiswaId = $request->input('mahasiswa_id');
+    //     $selectedMahasiswa = session('selectedMahasiswa', []);
+        
+    //     if (!in_array($mahasiswaId, $selectedMahasiswa)) {
+    //         $selectedMahasiswa[] = $mahasiswaId;
+    //         session(['selectedMahasiswa' => $selectedMahasiswa]);
+    //     }
+
+    //     return redirect()->route('kaprodi.class.create');
+    // }
+
+    // public function removeStudent($mahasiswaId)
+    // {   
+    //     $selectedMahasiswa = session('selectedMahasiswa', []);
+    //     if (($key = array_search($mahasiswaId, $selectedMahasiswa)) !== false) {
+    //         unset($selectedMahasiswa[$key]);
+    //         session(['selectedMahasiswa' => $selectedMahasiswa]);
+    //     }
+
+    //     return redirect()->route('kaprodi.class.create');
+    // }
 
     public function kelasEdit($id)
     {
         $kelas = Kelas::with('mahasiswa')->findOrFail($id);
         $dosens = Dosen::all();
         $kelasList = Kelas::all(); // For dropdown options
+        $mahasiswas = Mahasiswa::whereNull('kelas_id')->get();
         $capacity = $kelas->jumlah;
+        $mahasiswas = Mahasiswa::whereNull('kelas_id')
+            ->orWhere('kelas_id', $kelas->id)
+            ->get();
 
-        return view('Kaprodi.editClass', compact('kelas', 'dosens', 'kelasList', 'capacity'));
+        return view('Kaprodi.editClass', compact('kelas', 'dosens', 'kelasList', 'capacity', 'mahasiswas'));
     }
 
     public function kelasUpdate(Request $request, $id)
     {
-        // Validate the incoming request data
+            // Validate request data
         $request->validate([
             'nama' => 'required|string|max:255',
-            'jumlah' => 'required|integer|min:1',
+            'jumlah' => 'required|integer',
             'dosen_id' => 'nullable|exists:dosens,id',
+            'mahasiswas' => 'array',
+            'mahasiswas.*' => 'exists:mahasiswas,id',
         ]);
 
-        // Find the Kelas model by ID
-        $kelas = Kelas::findOrFail($id);
+        // Get the number of mahasiswa to be added
+        $mahasiswaIds = $request->input('mahasiswas', []);
+        $numberOfMahasiswa = count($mahasiswaIds);
 
-        // Update the Kelas model with validated data
+        // Check if the number of mahasiswa exceeds the class capacity
+        if ($numberOfMahasiswa > $request->input('jumlah')) {
+            return redirect()->back()->withErrors([
+                'mahasiswas' => 'Jumlah mahasiswa yang didaftarkan tidak boleh melebihi kapasitas kelas.'
+            ])->withInput();
+        }
+
+        // Update Kelas
+        $kelas = Kelas::findOrFail($id);
         $kelas->update([
             'nama' => $request->input('nama'),
             'jumlah' => $request->input('jumlah'),
+            'dosen_id' => $request->input('dosen_id') ?: null,
         ]);
 
-        // Update the dosen's kelas_id
-        if ($request->input('dosen_id')) {
-            $dosen = Dosen::findOrFail($request->input('dosen_id'));
+        // Assign Mahasiswa to Kelas
+        Mahasiswa::whereIn('id', $mahasiswaIds)->update(['kelas_id' => $kelas->id]);
 
-            // Unset the previous dosen's kelas_id if exists
-            if ($kelas->dosen) {
-                $kelas->dosen->update(['kelas_id' => null]);
-            }
+        // Remove mahasiswa not selected
+        Mahasiswa::where('kelas_id', $kelas->id)
+                ->whereNotIn('id', $mahasiswaIds)
+                ->update(['kelas_id' => null]);
 
-            // Set the new dosen's kelas_id
-            $dosen->update(['kelas_id' => $kelas->id]);
-        } else {
-            // Set kelas_id to null for the current dosen of this class if no dosen_id is provided
-            if ($kelas->dosen) {
-                $kelas->dosen->update(['kelas_id' => null]);
-            }
-        }
-
-        // Redirect back to the index route with a success message
-        return redirect()->route('kaprodi.class.index')->with('success', 'Kelas updated successfully!');
+        return redirect()->route('kaprodi.class.index')->with('success', 'Kelas updated successfully.');
     }
 
     public function kelasDelete($id)
@@ -131,32 +178,14 @@ class KelasController extends Controller
 
         // Update related Dosen records to nullify the kelas_id
         Dosen::where('kelas_id', $id)->update(['kelas_id' => null]);
+        Mahasiswa::where('kelas_id', $id)->update(['kelas_id' => null]);
 
         // Optionally, delete the Kelas record
         $kelas->delete();
 
         // Redirect back to the index page
-        return redirect()->route('kelas.index');
+        return redirect()->route('kaprodi.class.index');
     }
 
-    // public function addStudent(Request $request, Kelas $kelas)
-    // {
-    //     $request->validate([
-    //         'mahasiswa_id' => 'required|exists:mahasiswa,id',
-    //     ]);
-
-    //     if ($kelas->mahasiswa->count() < 10) {
-    //         $kelas->mahasiswa()->attach($request->mahasiswa_id);
-    //         return redirect()->route('kaprodi.class.show', $kelas)->with('success', 'Mahasiswa berhasil ditambahkan ke kelas');
-    //     } else {
-    //         return redirect()->route('kaprodi.class.show', $kelas)->with('error', 'Kelas sudah penuh');
-    //     }
-    // }
-
-    // public function removeStudent(Kelas $kelas, $mahasiswaId)
-    // {
-    //     $kelas->mahasiswa()->detach($mahasiswaId);
-    //     return redirect()->route('kaprodi.class.show', $kelas)->with('success', 'Mahasiswa berhasil dihapus dari kelas');
-    // }
 }
 

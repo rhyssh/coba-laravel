@@ -14,10 +14,10 @@ class MahasiswaSeeder extends Seeder
     public function run(): void
     {
         //Mahasiswa
-        for($i = 1; $i <= 20; $i++) {
+        for($i = 1; $i <= 34; $i++) {
             Mahasiswa::create([
                 'user_id' => 6 + $i,
-                'kelas_id' => ($i <= 10) ? 1 : 2,
+                'kelas_id' => ($i <= 10) ? 1 : null,
                 'nim' => '201900' . $i,
                 'name' => 'Mahasiswa ' . $i,
                 'tempat_lahir' => 'Tempat Lahir ' . $i,
