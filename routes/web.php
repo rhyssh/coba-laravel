@@ -106,6 +106,7 @@ Route::middleware('auth')->group(function () {
             // Route untuk request edit data
             Route::get('/request/edit', [MahasiswaController::class, 'requestEdit'])->name('mahasiswa.request.edit');
             Route::post('/request/edit', [MahasiswaController::class, 'submitRequestEdit'])->name('mahasiswa.submit.request.edit');
+            
         });
     // });
 });
