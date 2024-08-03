@@ -3,12 +3,12 @@
 @section('title', 'Detail Mahasiswa')
 
 @section('content')
-    <h1 class="mb-6 text-2xl font-semibold">Detail Mahasiswa: {{ $student->nama }}</h1>
+    <h1 class="text-2xl font-semibold mb-6">Detail Mahasiswa: {{ $student->nama }}</h1>
 
-    <div class="p-8 bg-white border-2 border-indigo-700 rounded-lg shadow-md">
-        <h2 class="mb-6 text-xl font-semibold text-indigo-700">Data Diri</h2>
-        <div class="grid grid-cols-1 gap-4 mb-6 md:grid-cols-2">
-            <div class="p-4 rounded-lg bg-indigo-50">
+    <div class="bg-white p-8 rounded-lg border-2 border-indigo-700 shadow-md">
+        <h2 class="text-xl font-semibold mb-6 text-indigo-700">Data Diri</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="bg-indigo-50 p-4 rounded-lg">
                 <p class="font-semibold text-indigo-700">Nama</p>
                 <p>{{ $student->name }}</p>
             </div>

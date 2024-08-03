@@ -18,7 +18,6 @@ class Mahasiswa extends Model
         'tanggal_lahir',
     ];
 
-
     public function user()
     {
         return $this->belongsTo(User::class);

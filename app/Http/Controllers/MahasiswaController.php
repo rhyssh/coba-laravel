@@ -13,7 +13,9 @@ class MahasiswaController extends Controller
         return view('mahasiswa.index', compact('students'));
     }
 
-    public function create() {
+
+    public function create()
+    {
         return view('mahasiswa.create');
     }
 
@@ -69,4 +71,3 @@ class MahasiswaController extends Controller
         return view('mahasiswa.detail', compact('student'));
     }
 }
-

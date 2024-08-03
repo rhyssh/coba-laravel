@@ -3,7 +3,20 @@
 @section('title', 'Data Mahasiswa')
 
 @section('content')
-    <h1 class="mb-6 text-2xl font-semibold">Data Mahasiswa</h1>
+    <h1 class="text-2xl font-semibold mb-6">Data Mahasiswa</h1>
+
+    <div class="mb-4">
+        <a href="{{ route('mahasiswa.create') }}" class="bg-indigo-700 text-white px-6 py-2 rounded-md hover:bg-indigo-800 transition duration-200 ease-in-out">
+            Tambah Mahasiswa
+        </a>
+    </div>
+    
+    @if (session('success'))
+      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+          <strong class="font-bold">Sukses!</strong>
+          <span class="block sm:inline">{{ session('success') }}</span>
+      </div>
+    @endif
 
     <div class="mb-4">
         <a href="{{ route('mahasiswa.create') }}" class="px-6 py-2 text-white transition duration-200 ease-in-out bg-indigo-700 rounded-md hover:bg-indigo-800">
