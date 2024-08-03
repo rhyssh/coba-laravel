@@ -1,50 +1,35 @@
 @extends('layout.master')
-@php
-    // Contoh data kelas yang diampu oleh dosen
-    $data = (object) [
-        'id' => 1,
-        'user_id' => '1',
-        'kelas_id' => '1',
-        'nim' => '4611422051',
-        'nama' => 'Dirandra Arya Aditya',
-        'tempat_lahir' => 'Medan, 20 January 2003',
-        'jurusan' => 'Teknik Informatika',
-        'email' => 'dirandra.arya@example.com',
-        'tanggal_masuk' => '15 September 2021',
-    ];
-@endphp
+
 @section('title', 'Mahasiswa Dashboard')
+
 @section('content')
-    <h2 class="text-2xl font-semibold text-indigo-600 mb-6">Edit Data</h2>
-    <div class="py-3 pb-5 px-3 mx-1 min-[360px]:mx-3 my-4 mb-5 bg-white rounded-xl shadow-lg">
-        <h3 class="text-indigo-600 mt-5 font-semibold text-xl text-center">Data Diri</h3>
-        <form class="space-y-3 " action="">
-            <div class="flex flex-col">
-                <label for="nama">Nama</label>
-                <input class="border border-gray-300 h-10 rounded-md px-2" type="text" name="nama" id="nama"
-                    value="{{ $data->nama }}">
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+        <h2 class="mb-8 text-3xl font-bold text-center text-indigo-700">Edit Data Mahasiswa</h2>
+        <form action="{{ route('mahasiswa.update', $student->id) }}" method="POST">
+            @csrf
+            <div class="space-y-6">
+                <div>
+                    <label for="nim" class="block text-sm font-medium text-gray-700">NIM</label>
+                    <input type="text" id="nim" name="nim" value="{{ $student->nim }}" class="block w-full px-4 py-2 mt-1 transition duration-150 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Nama Mahasiswa</label>
+                    <input type="text" id="name" name="name" value="{{ $student->name }}" class="block w-full px-4 py-2 mt-1 transition duration-150 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+                <div>
+                    <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
+                    <input type="text" id="tempat_lahir" name="tempat_lahir" value="{{ $student->tempat_lahir }}" class="block w-full px-4 py-2 mt-1 transition duration-150 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+                <div>
+                    <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
+                    <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ $student->tanggal_lahir }}" class="block w-full px-4 py-2 mt-1 transition duration-150 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
             </div>
-            <div class="flex flex-col">
-                <label for="ttl">Tempat, Tanggal Lahir</label>
-                <input class="border border-gray-300 h-10 rounded-md px-2" type="date" name="ttl" id="ttl">
-            </div>
-            <div class="flex flex-col">
-                <label for="jurusan">Jurusan</label>
-                <input class="border border-gray-300 h-10 rounded-md px-2" type="text" name="jurusan" id="jurusan"
-                    value="{{ $data->jurusan }}">
-            </div>
-            <div class="flex gap-3">
-                <a href="{{ route('mhs.dashboard') }}"
-                    class="border border-indigo-700 mt-8 text-indigo-700 font-semibold  px-6 py-2 rounded-md hover:text-white hover:bg-indigo-800 transition duration-200 ease-in-out cursor-pointer">
-                    Kembali
-                </a>
-
-                <button
-                    class="bg-indigo-700 mt-8 text-white px-6 py-2 rounded-md hover:bg-indigo-800 transition duration-200 ease-in-out cursor-pointer">
-                    Ubah Data
-                </button>
-
+            <div class="mt-8">
+                <button type="submit" class="w-full py-2 font-semibold text-white transition duration-200 ease-in-out bg-indigo-700 rounded-lg hover:bg-indigo-800">Submit</button>
             </div>
         </form>
     </div>
+</div>
 @endsection
