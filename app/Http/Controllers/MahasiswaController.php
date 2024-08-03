@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MahasiswaController extends Controller
 {
@@ -65,9 +66,9 @@ class MahasiswaController extends Controller
         return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa deleted successfully.');
     }
 
-    public function show($id)
+    public function show()
     {
-        $student = Mahasiswa::findOrFail($id);
+        $student = Auth::user();
         return view('mahasiswa.detail', compact('student'));
     }
 }
