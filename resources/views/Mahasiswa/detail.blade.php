@@ -12,25 +12,25 @@
                 <p class="font-semibold text-indigo-700">Nama</p>
                 <p>{{ $student->name }}</p>
             </div>
-            <div class="bg-indigo-50 p-4 rounded-lg">
+            <div class="p-4 rounded-lg bg-indigo-50">
                 <p class="font-semibold text-indigo-700">NIM</p>
                 <p>{{ $student->nim }}</p>
             </div>
-            <div class="bg-indigo-50 p-4 rounded-lg">
+            <div class="p-4 rounded-lg bg-indigo-50">
                 <p class="font-semibold text-indigo-700">Email</p>
                 <p>{{ $student->email }}</p>
             </div>
-            <div class="bg-indigo-50 p-4 rounded-lg">
+            <div class="p-4 rounded-lg bg-indigo-50">
                 <p class="font-semibold text-indigo-700">Alamat</p>
                 <p>{{ $student->alamat }}</p>
             </div>
-            <div class="bg-indigo-50 p-4 rounded-lg">
+            <div class="p-4 rounded-lg bg-indigo-50">
                 <p class="font-semibold text-indigo-700">Telepon</p>
                 <p>{{ $student->telepon }}</p>
             </div>
         </div>
         <div class="flex justify-end">
-            <a href="{{ route('mahasiswa.index') }}" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition duration-200">Kembali ke Indeks</a>
+            <a href="{{ route('mahasiswa.index') }}" class="px-4 py-2 text-white transition duration-200 bg-indigo-600 rounded hover:bg-indigo-700">Kembali ke Indeks</a>
         </div>
     </div>
 @endsection
