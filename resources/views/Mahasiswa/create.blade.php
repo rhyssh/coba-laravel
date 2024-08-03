@@ -26,12 +26,11 @@
         @endif
 
         <!-- Form tambah data mahasiswa -->
-        <form action="{{ route('mahasiswa.store') }}" method="POST">
+        <form action="{{ route('dosen.mahasiswa.store') }}" method="POST">
             @csrf
             <div class="space-y-6">
                 <div>
-                    <label for="user_id" class="block text-sm font-medium text-gray-700">User ID</label>
-                    <input type="number" id="user_id" name="user_id" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" required>
+                    <input type="hidden" id="user_id" name="user_id" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
                 </div>
                 <div>
                     <label for="kelas_id" class="block text-sm font-medium text-gray-700">Kelas ID</label>
@@ -42,8 +41,17 @@
                     <input type="text" id="nim" name="nim" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" required>
                 </div>
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700">Nama Mahasiswa</label>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Nama</label>
                     <input type="text" id="name" name="name" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="email" name="email" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" required>
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="password" name="password" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-150" required>
                 </div>
                 <div>
                     <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>

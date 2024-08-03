@@ -64,12 +64,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [DosenController::class, 'dashboard'])->name('dosen.index');
 
             Route::group(['prefix' => 'mahasiswa'], function () {
-                Route::get('/', [DosenController::class, 'mahasiswaIndex'])->name('dosen.mahasiswa.index');
-                Route::get('/create', [DosenController::class, 'mahasiswaCreate'])->name('dosen.mahasiswa.create');
-                Route::post('/', [DosenController::class, 'mahasiswaStore'])->name('dosen.mahasiswa.store');
-                Route::get('/{id}', [DosenController::class, 'mahasiswaEdit'])->name('dosen.mahasiswa.edit');
-                Route::post('/update', [DosenController::class, 'mahasiswaUpdate'])->name('dosen.mahasiswa.update');
-                Route::delete('/{id}', [DosenController::class, 'mahasiswaDelete'])->name('dosen.mahasiswa.delete');
+                Route::get('/', [MahasiswaController::class, 'index'])->name('dosen.mahasiswa.index');
+                Route::get('/create', [MahasiswaController::class, 'create'])->name('dosen.mahasiswa.create');
+                Route::post('/', [MahasiswaController::class, 'store'])->name('dosen.mahasiswa.store');
+                Route::get('/{id}', [MahasiswaController::class, 'edit'])->name('dosen.mahasiswa.edit');
+                Route::post('/update/{id}', [MahasiswaController::class, 'update'])->name('dosen.mahasiswa.update');
+                Route::delete('/{id}', [MahasiswaController::class, 'delete'])->name('dosen.mahasiswa.delete');
+                Route::get('/detail/{id}', [MahasiswaController::class, 'show'])->name('dosen.mahasiswa.detail');
             });
 
             Route::group(['prefix' => 'kelas'], function () {
@@ -97,10 +98,10 @@ Route::middleware('auth')->group(function () {
     // Routes for Mahasiswa
     // Route::middleware('role:mahasiswa')->group(function () {
         Route::group(['prefix' => 'mahasiswa'], function () {
-            Route::get('/', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
+            Route::get('/', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
         
             // Route untuk melihat data sendiri
-            Route::get('/myprofile', [MahasiswaController::class, 'show'])->name('mahasiswa.show');
+            // Route::get('/myprofile', [MahasiswaController::class, 'show'])->name('mahasiswa.show');
             
             // Route untuk request edit data
             Route::get('/request/edit', [MahasiswaController::class, 'requestEdit'])->name('mahasiswa.request.edit');
