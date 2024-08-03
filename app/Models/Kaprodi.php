@@ -16,7 +16,7 @@ class Kaprodi extends Model
         'name', 
     ];
 
-    public function User(){
+    public function user(){
         return $this->belongsTo(User::class); 
     }
 }
