@@ -18,7 +18,6 @@ class Mahasiswa extends Model
         'tanggal_lahir',
     ];
 
-    // Jika ada hubungan dengan model lain, Anda bisa mendefinisikannya di sini.
     public function user()
     {
         return $this->belongsTo(User::class);

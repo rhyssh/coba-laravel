@@ -19,15 +19,15 @@ class User extends Authenticatable
         'role',
     ];
 
-    public function Kaprodi(){
+    public function kaprodi(){
         return $this->hasOne(Kaprodi::class); 
     }
 
-    public function Mahasiswa(){
+    public function mahasiswa(){
         return $this->hasOne(Mahasiswa::class); 
     }
 
-    public function Dosen(){
+    public function dosen(){
         return $this->hasOne(Dosen::class); 
     }
 }

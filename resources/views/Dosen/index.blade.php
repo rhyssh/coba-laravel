@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', 'Kaprodi Manage Dosen')
+@section('title', 'Manage Dosen')
 
 @section('content')
 <div class="container px-4 py-8 mx-auto">
