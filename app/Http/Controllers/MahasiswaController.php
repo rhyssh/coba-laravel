@@ -31,7 +31,6 @@ class MahasiswaController extends Controller
             'tanggal_lahir' => 'required|date',
         ]);
     
-    
         Mahasiswa::create($validatedData);
     
         return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa created successfully.');
