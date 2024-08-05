@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Kelas;
-use App\Models\User;
+use App\Models\Mahasiswa;
+use App\Models\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class DosenController extends Controller
 {
-    public function dashboard() {
+    public function dashboard() 
+    {
         return view('dosen._dashboard');
     }
 
@@ -100,5 +103,55 @@ class DosenController extends Controller
         $dosen = Dosen::findOrFail($id);
         $dosen->delete();
         return redirect()->route('kaprodi.dosen.index');
+    }
+
+    public function myclass() 
+    {
+        $user = Auth::user();
+
+        $dosen  = $user->dosen;
+
+        $kelas = $dosen->kelas;
+        $kelas_id = $dosen->kelas_id;
+        $mahasiswas = Mahasiswa::where('kelas_id', $kelas_id)->get();
+
+        return view('dosen.myclass', compact('kelas', 'mahasiswas'));
+
+    }
+
+    public function indexRequest() 
+    {
+        $requests = Request::with('mahasiswa', 'kelas')->get();
+        // dd($requests);
+        // $students = Mahasiswa::all();
+        return view('dosen.request', compact('requests'));
+    }
+
+    public function approveRequest($id)
+    {
+        $request = Request::findOrFail($id);
+
+        $mahasiswa = $request->mahasiswa;
+
+        $mahasiswa->edit = 1; // approve given
+        $mahasiswa->save();
+
+        $request->delete();
+
+        return redirect()->back()->with('success', 'Request approved successfully.');
+    }
+
+    public function rejectRequest($id)
+    {
+        $request = Request::findOrFail($id);
+
+        $mahasiswa = $request->mahasiswa;
+
+        $mahasiswa->edit = 0; // rejected
+        $mahasiswa->save();
+
+        $request->delete();
+
+        return redirect()->back()->with('success', 'Request rejected successfully.');
     }
 }
