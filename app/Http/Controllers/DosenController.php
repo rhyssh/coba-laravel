@@ -22,7 +22,7 @@ class DosenController extends Controller
 
     public function dosenCreate()
     {
-        $kelas = Kelas::all();
+        $kelas = Kelas::doesntHave('dosen')->get();
         return view('dosen.create', compact('kelas'));
     }
 
@@ -49,8 +49,8 @@ class DosenController extends Controller
         // otomatis rolenya dosen wali
         $user = User::create([
             'username' => $request->name,
-            'email' => $request->name . '@example.com', // Replace with actual email logic
-            'password' => Hash::make('password'), // Replace with actual password logic
+            'email' => $request->name , // Replace with actual email logic
+            'password' => Hash::make($request->password), // Replace with actual password logic
             'role' => 'dosen-wali',
         ]);
     
@@ -98,7 +98,11 @@ class DosenController extends Controller
     public function dosenDelete($id)
     {
         $dosen = Dosen::findOrFail($id);
+        $user = User::findOrFail($dosen->user_id);
+
+        $user->delete();
         $dosen->delete();
+        
         return redirect()->route('kaprodi.dosen.index');
     }
 }

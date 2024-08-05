@@ -10,20 +10,18 @@
         <table class="min-w-full bg-white">
             <thead>
                 <tr>
-                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">ID</th>
-                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">User ID</th>
-                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">Nama Kelas</th>
+                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">No.</th>
+                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">Nama</th>
                     <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">Kode Dosen</th>
                     <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">NIP</th>
-                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">Nama</th>
+                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">Kelas</th>
                     <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($dosen as $d)
                 <tr>
-                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->id }}</td>
-                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->user_id }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300">{{ $loop->iteration }}</td>
                     <td class="px-4 py-2 border-b border-gray-300">
                         {{ $d->kelas ? $d->kelas->nama : 'Belum ada kelas' }}
                     </td>
