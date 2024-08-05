@@ -46,6 +46,11 @@ Route::middleware('auth')->group(function () {
                 Route::get('/{id}', [DosenController::class, 'dosenEdit'])->name('kaprodi.dosen.edit');
                 Route::post('/dosen/{id}/update', [DosenController::class, 'dosenUpdate'])->name('kaprodi.dosen.update');
                 Route::delete('/{id}', [DosenController::class, 'dosenDelete'])->name('kaprodi.dosen.delete');
+                Route::get('/create', [DosenController::class, 'dosenCreate'])->name('kaprodi.dosen.create');
+                Route::post('/', [DosenController::class, 'dosenStore'])->name('kaprodi.dosen.store');
+                Route::get('/{id}', [DosenController::class, 'dosenEdit'])->name('kaprodi.dosen.edit');
+                Route::post('/dosen/{id}/update', [DosenController::class, 'dosenUpdate'])->name('kaprodi.dosen.update');
+                Route::delete('/{id}', [DosenController::class, 'dosenDelete'])->name('kaprodi.dosen.delete');
             });
             Route::group(['prefix' => 'class'], function () {
                 Route::get('/', [KaprodiController::class, 'classIndex'])->name('kaprodi.class.index');
@@ -109,6 +114,102 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+
+Route::get('/dashboard', function () {
+    return view('Kaprodi.dashboard');
+})->name('kaprodi.dashboard');
+
+Route::get('/dosen', function () {
+    return view('Kaprodi.dosen');
+});
+
+Route::get('/detail-dosen', function () {
+    return view('Kaprodi.detailDosen');
+})->name('kaprodi.dosen');
+
+Route::get('/detail-class', function () {
+    return view('Kaprodi.classDetail');
+})->name('kaprodi.class');
+
+Route::get('/edit-dosen', function () {
+    return view('Kaprodi.editDosen');
+})->name('kaprodi.editdosen');
+
+Route::get('/edit-class', function () {
+    return view('Kaprodi.editClass');
+})->name('kaprodi.editclass');
+
+Route::get('/create-class', function () {
+    return view('Kaprodi.createClass');
+})->name('kaprodi.createClass');
+
+Route::get('/create-dosen', function () {
+    return view('Kaprodi.createDosen');
+})->name('kaprodi.createDosen');
+Route::get('/login', [LoginController::class, 'index']);
+Route::get('/kaprodi', [KaprodiController::class, 'index']);
+Route::get('/dosen', [DosenController::class, 'index']);
+Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
+
+Route::get('/dashboarddosen', function () {
+    return view('Dosen.dashboard');
+});
+
+Route::get('/detailclass', function () {
+    return view('Dosen.class_detail');
+})->name('detail.class');
+
+Route::get('/datamahasiswa', function () {
+    return view('Dosen.datamhs');
+});
+
+Route::get('/detailmhs', function () {
+    return view('Dosen.detailmhs');
+})->name('detailmhs');
+
+Route::get('/editmhs', function () {
+    return view('Dosen.editdatamhs');
+})->name('editmhs');
+
+Route::get('/pengajuanmhs', function () {
+    return view('Dosen.pengajuanmhs');
+})->name('ajumhs');
+Route::get('/dashboard', function () {
+    return view('Kaprodi.dashboard');
+})->name('kaprodi.dashboard');
+
+Route::get('/dosen', function () {
+    return view('Kaprodi.dosen');
+});
+
+Route::get('/detail-dosen', function () {
+    return view('Kaprodi.detailDosen');
+})->name('kaprodi.dosen');
+
+Route::get('/detail-class', function () {
+    return view('Kaprodi.classDetail');
+})->name('kaprodi.class');
+
+Route::get('/edit-dosen', function () {
+    return view('Kaprodi.editDosen');
+})->name('kaprodi.editdosen');
+
+Route::get('/edit-class', function () {
+    return view('Kaprodi.editClass');
+})->name('kaprodi.editclass');
+
+Route::get('/create-class', function () {
+    return view('Kaprodi.createClass');
+})->name('kaprodi.createClass');
+
+Route::get('/create-dosen', function () {
+    return view('Kaprodi.createDosen');
+})->name('kaprodi.createDosen');
+
+Route::get('/login', [LoginController::class, 'index']);
+Route::get('/kaprodi', [KaprodiController::class, 'index']);
+Route::get('/dosen', [DosenController::class, 'index']);
+Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
 
 Route::get('/dashboarddosen', function () {
     return view('Dosen.dashboard');
