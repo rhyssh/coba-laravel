@@ -6,7 +6,7 @@
 <div class="flex items-center justify-center min-h-screen bg-gray-100">
     <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
         <h2 class="mb-8 text-3xl font-bold text-center text-indigo-700">Edit Data Mahasiswa</h2>
-        <form action="{{ route('mahasiswa.update', $student->id) }}" method="POST">
+        <form action="{{ route('dosen.mahasiswa.update', $student->id) }}" method="POST">
             @csrf
             <div class="space-y-6">
                 <div>
