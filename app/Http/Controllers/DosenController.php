@@ -16,33 +16,45 @@ class DosenController extends Controller
 
     public function dosenIndex()
     {
-        $dosen = Dosen::all();
+        $dosen = Dosen::with('kelas')->get();
         return view('dosen.index', compact('dosen'));
     }
 
     public function dosenCreate()
     {
-        return view('dosen.create');
+        $kelas = Kelas::all();
+        return view('dosen.create', compact('kelas'));
     }
 
     public function dosenStore(Request $request)
     {
         $request->validate([
-            'kelas_id' => 'nullable|unique:dosens,kelas_id|exists:kelas,id',
+            'kelas_id' => 'nullable|exists:kelas,id', // Boleh null dan mengecek yang sudah ada
             'kode_dosen' => 'required|unique:dosens,kode_dosen',
             'nip' => 'required|unique:dosens,nip',
             'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
-
-        // Create new user with role 'dosen wali'
+    
+        // Check if the selected kelas already has a dosen
+        if ($request->kelas_id) {
+            $existingDosen = Dosen::where('kelas_id', $request->kelas_id)->first();
+            
+            if ($existingDosen) {
+                return redirect()->back()->with('error', 'Kelas sudah punya dosen wali')->withInput();
+            }
+        }
+    
+        // otomatis rolenya dosen wali
         $user = User::create([
             'username' => $request->name,
             'email' => $request->name . '@example.com', // Replace with actual email logic
             'password' => Hash::make('password'), // Replace with actual password logic
             'role' => 'dosen-wali',
         ]);
-
-        // Create new dosen with the created user's ID
+    
+        // Buat dosen baru
         $dosen = Dosen::create([
             'user_id' => $user->id,
             'kelas_id' => $request->kelas_id,
@@ -59,6 +71,9 @@ class DosenController extends Controller
 
     public function dosenEdit($id)
     {
+        // fetch kelas buat ngambil data semua kelas yg ada di db
+        $kelas = Kelas::all();
+
         $dosen = Dosen::findOrFail($id);
         return view('dosen.edit', compact('dosen'));
     }

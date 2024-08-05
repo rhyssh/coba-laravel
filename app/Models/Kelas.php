@@ -16,7 +16,7 @@ class Kelas extends Model
 
     public function dosen()
     {
-        return $this->hasMany(Dosen::class);
+        return $this->hasOne(Dosen::class);
     }
 
     public function mahasiswa()

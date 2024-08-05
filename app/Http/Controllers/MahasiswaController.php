@@ -51,7 +51,7 @@ class MahasiswaController extends Controller
             'tanggal_lahir' => $request->tanggal_lahir,
         ]);
 
-        return redirect()->route('dosen.mahasiswa.index')->with('success', 'Mahasiswa created successfully.');
+        return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa created successfully.');
     }
 
 
