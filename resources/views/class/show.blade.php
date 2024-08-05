@@ -1,33 +1,15 @@
-@php
-    //contoh data
-    $mhss = [(object)[
-        'nama'=>'Asep Kopling',
-        'nim'=>'0001',],
-        (object)[
-        'nama'=>'Ujang Knalpot',
-        'nim'=>'0010',],
-        (object)[
-        'nama'=>'Riski Tromol',
-        'nim'=>'0011',],
-        (object)[
-        'nama'=>'Dimas Kastrol',
-        'nim'=>'0100',],
-        (object)[
-        'nama'=>'Putra Minang',
-        'nim'=>'0101',],
-        (object)[
-        'nama'=>'Supri Spakbor',
-        'nim'=>'0110',],];
-    $i=1;
-    $jmlh_mhs=6;
-@endphp
-
 @extends('layout.master')
 
-@section('title', 'Kaprodi Dashboard')
+@section('title', 'Detail Kelas')
 
 @section('content')
+    <h1 class="mb-6 text-2xl font-semibold">Detail Kelas: {{ $kelas->nama }}</h1> {{-- UNTUK MENDAPATKAN NAMA KELAS --}}
 
+    @if($dosens->isNotEmpty())
+        <h1 class="mb-6 text-2xl font-semibold">Dosen Wali Kelas: {{ $dosens->first()->name }}</h1> {{-- DOSEN WALI --}}
+    @else
+        <h1 class="mb-6 text-2xl font-semibold text-red-700">Dosen Wali Kelas: Tidak Ada Dosen Wali Untuk Kelas Ini!</h1>
+    @endif
 
 <div class="flex flex-col items-center gap-10 md:flex-row sm:mx-10">
     <div class="flex-1 p-6 bg-white border-2 border-indigo-700 rounded-lg shadow-md">
@@ -59,5 +41,5 @@
         </table>
         <x-edit-del></x-edit-del>
     </div>
-</div>
+<div>
 @endsection

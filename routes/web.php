@@ -20,15 +20,13 @@ use App\Http\Controllers\MahasiswaController;
 Route::get('/', function () {
     return redirect('login');
 });
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Routes for guests (non-authenticated users)
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'authenticate']);
 });
+
 // Routes for authenticated users
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -40,18 +38,13 @@ Route::middleware('auth')->group(function () {
 
             Route::group(['prefix' => 'dosen'], function () {
                 Route::get('/', [KaprodiController::class, 'dosenIndex'])->name('kaprodi.dosen.index');
-                Route::get('/', [DosenController::class, 'dosenIndex'])->name('kaprodi.dosen.index');
-                Route::get('/create', [DosenController::class, 'dosenCreate'])->name('kaprodi.dosen.create');
-                Route::post('/', [DosenController::class, 'dosenStore'])->name('kaprodi.dosen.store');
-                Route::get('/{id}', [DosenController::class, 'dosenEdit'])->name('kaprodi.dosen.edit');
-                Route::post('/dosen/{id}/update', [DosenController::class, 'dosenUpdate'])->name('kaprodi.dosen.update');
-                Route::delete('/{id}', [DosenController::class, 'dosenDelete'])->name('kaprodi.dosen.delete');
                 Route::get('/create', [DosenController::class, 'dosenCreate'])->name('kaprodi.dosen.create');
                 Route::post('/', [DosenController::class, 'dosenStore'])->name('kaprodi.dosen.store');
                 Route::get('/{id}', [DosenController::class, 'dosenEdit'])->name('kaprodi.dosen.edit');
                 Route::post('/dosen/{id}/update', [DosenController::class, 'dosenUpdate'])->name('kaprodi.dosen.update');
                 Route::delete('/{id}', [DosenController::class, 'dosenDelete'])->name('kaprodi.dosen.delete');
             });
+
             Route::group(['prefix' => 'class'], function () {
                 Route::get('/', [KaprodiController::class, 'classIndex'])->name('kaprodi.class.index');
                 Route::get('/create', [KaprodiController::class, 'classCreate'])->name('kaprodi.class.create');
