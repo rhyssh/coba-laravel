@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\Request as EditRequest;
 class MahasiswaController extends Controller
 {
     public function index()
@@ -100,6 +100,43 @@ class MahasiswaController extends Controller
 
         // Kirim data mahasiswa ke view
         return view('mahasiswa.dashboard', compact('student'));
+    }
+
+    public function requestEdit()
+    {
+        // Mengambil data mahasiswa yang login
+        $mahasiswa = Mahasiswa::where('user_id', Auth::id())->first();
+        return view('mahasiswa.request', compact('mahasiswa'));
+    }
+
+    // Mengirimkan request edit data
+    public function submitRequestEdit(Request $request)
+    {
+        // Validate input
+        $validatedData = $request->validate([
+            'kelas_id' => 'required|integer|exists:kelas,id',
+            'keterangan' => 'required|string|max:255',
+        ]);
+    
+        // Get the mahasiswa ID from the authenticated user
+        $mahasiswaId = Mahasiswa::where('user_id', Auth::id())->first()->id;
+    
+        // Check if a request already exists for this mahasiswa
+        $existingRequest = EditRequest::where('mahasiswa_id', $mahasiswaId)->first();
+    
+        if ($existingRequest) {
+            // If a request already exists, handle rejection
+            return redirect()->route('mahasiswa.dashboard')->with('error', 'A request already exists for this mahasiswa.');
+        }
+    
+        // Create a new request if no existing request is found
+        EditRequest::create([
+            'kelas_id' => $validatedData['kelas_id'],
+            'mahasiswa_id' => $mahasiswaId,
+            'keterangan' => $validatedData['keterangan'],
+        ]);
+    
+        return redirect()->route('mahasiswa.dashboard')->with('success', 'Request edit data telah dikirim.');
     }
     
 }

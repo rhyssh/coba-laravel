@@ -3,6 +3,17 @@
 @section('title', 'Mahasiswa Dashboard')
 @section('content')
 
+    <!-- Display Success and Error Messages -->
+    @if (session('success'))
+        <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
+            {{ session('success') }}
+        </div>
+    @elseif (session('error'))
+        <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <h1 class="text-2xl font-semibold mb-6">Welcome, {{ $student->name }}</h1>
 
     <div class="flex flex-col items-center gap-10 md:flex-row sm:mx-10">
