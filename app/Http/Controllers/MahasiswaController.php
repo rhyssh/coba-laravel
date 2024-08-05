@@ -16,7 +16,6 @@ class MahasiswaController extends Controller
         return view('mahasiswa.index', compact('students'));
     }
 
-
     public function create()
     {
         return view('mahasiswa.create');
@@ -51,9 +50,8 @@ class MahasiswaController extends Controller
             'tanggal_lahir' => $request->tanggal_lahir,
         ]);
 
-        return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa created successfully.');
+        return redirect()->route('dosen.mahasiswa.index')->with('success', 'Mahasiswa created successfully.');
     }
-
 
     public function edit($id)
     {
@@ -96,7 +94,7 @@ class MahasiswaController extends Controller
         $user = Auth::user();
         
         // Cari data mahasiswa berdasarkan user ID
-        $student = Mahasiswa::where('user_id', $user->id)->first();
+        $student = $user->mahasiswa;
 
         // Kirim data mahasiswa ke view
         return view('mahasiswa.dashboard', compact('student'));
@@ -117,7 +115,7 @@ class MahasiswaController extends Controller
             'kelas_id' => 'required|integer|exists:kelas,id',
             'keterangan' => 'required|string|max:255',
         ]);
-    
+
         // Get the mahasiswa ID from the authenticated user
         $mahasiswaId = Mahasiswa::where('user_id', Auth::id())->first()->id;
     
@@ -135,6 +133,11 @@ class MahasiswaController extends Controller
             'mahasiswa_id' => $mahasiswaId,
             'keterangan' => $validatedData['keterangan'],
         ]);
+
+        // $user = Auth::user();
+        // $student = $user->mahasiswa->edit;
+        // $student->edit = 1; // pending
+        // $student->save();
     
         return redirect()->route('mahasiswa.dashboard')->with('success', 'Request edit data telah dikirim.');
     }
