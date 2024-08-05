@@ -7,20 +7,20 @@ use App\Models\Kelas;
 
 class KelasController extends Controller
 {
-    public function index()
+    public function kelasIndex()
     {
-        return view('Kelas.index');
+        return view('class.index');
     }
 
     public function showKelas()
     {
         $kelas = Kelas::all();
-        return view('Kelas.kelasIndex', compact('kelas'));
+        return view('class.index', compact('kelas'));
     }
 
     public function kelasCreate()
     {  
-        return view('Kelas.kelasCreate');
+        return view('class.create');
     }
 
     public function kelasStore(Request $request)
@@ -29,12 +29,12 @@ class KelasController extends Controller
             'name' => 'required',
         ]);
         Kelas::create($request->all());
-        return redirect()->route('kelas.index');
+        return redirect()->route('class.index');
     }
 
     public function kelasEdit($id){
         $kelas = Kelas::findOrFail($id);
-        return view('Kelas.kelasEdit', compact('kelas'));
+        return view('class.kelasEdit', compact('kelas'));
     }
 
     public function kelasUpdate(Request $request, $id)
@@ -44,14 +44,14 @@ class KelasController extends Controller
         ]);
         $kelas = Kelas::findOrFail($id);
         $kelas->update($request->all());
-        return redirect()->route('kelas.index');
+        return redirect()->route('class.index');
     }
 
     public function kelasDelete($id)
     {
         $kelas = Kelas::findOrFail($id);
         $kelas->delete();
-        return redirect()->route('kelas.index');
+        return redirect()->route('class.index');
     }
 
 

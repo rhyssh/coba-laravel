@@ -1,30 +1,45 @@
 @extends('layout.master')
 
-@section('title', 'Dosen Dashboard')
+@section('title', 'Manage Dosen')
 
 @section('content')
-    <h1 class="text-2xl font-semibold mb-6">Welcome, Dosen</h1>
-
-    @php
-        // Contoh data kelas yang diampu oleh dosen
-        $classes = [
-            (object)[
-                'id' => 1,
-                'nama_kelas' => 'Pemrograman Web A',
-                'jumlah_mahasiswa' => 3
-],
-        ];
-    @endphp
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @foreach ($classes as $class)
-            <div class="bg-white p-6 rounded-lg border-2 border-indigo-700 shadow-md">
-                <h2 class="text-xl font-semibold mb-2 text-indigo-700">{{ $class->nama_kelas }}</h2>
-                <p class="mb-2"><strong>Jumlah Mahasiswa:</strong> {{ $class->jumlah_mahasiswa }}</p>
-                <button onclick="window.location.href='{{ route('detail.class') }}'" class="bg-indigo-700 mt-8 text-white px-6 py-2 rounded-md hover:bg-indigo-800 transition duration-200 ease-in-out">
-                    Lihat Detail
-                </button>
-            </div>
-        @endforeach
+<div class="container px-4 py-8 mx-auto">
+    <h1 class="mb-6 text-2xl font-semibold text-gray-900">Daftar Dosen</h1>
+    <a href="{{ route('kaprodi.dosen.create') }}" class="px-4 py-2 mb-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Tambah Dosen</a>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">ID</th>
+                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">User ID</th>
+                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">Kelas ID</th>
+                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">Kode Dosen</th>
+                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">NIP</th>
+                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">Nama</th>
+                    <th class="px-4 py-2 text-sm leading-4 text-left text-gray-700 border-b-2 border-gray-300">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($dosen as $d)
+                <tr>
+                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->id }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->user_id }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->kelas_id }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->kode_dosen }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->nip }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->name }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300">
+                        <a href="{{ route('kaprodi.dosen.edit', $d->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                        <form action="{{ route('kaprodi.dosen.delete', $d->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="ml-2 text-red-600 hover:text-red-900">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
+</div>
 @endsection

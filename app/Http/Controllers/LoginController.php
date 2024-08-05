@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -25,8 +26,16 @@ class LoginController extends Controller
         if(Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            Log::info('Login successful, redirecting to /kaprodi');
-            return redirect()->intended('/kaprodi');
+            // Check the authenticated user's role and redirect accordingly
+            $role = Auth::user()->role;
+            switch ($role) {
+                case 'kaprodi':
+                    return redirect()->intended('/kaprodi');
+                case 'dosen-wali':
+                    return redirect()->intended('/dosenwali');
+                case 'mahasiswa':
+                    return redirect()->intended('/mahasiswa/show');
+            }
         }
 
         return back()->with('login-error', 'Login Failed');
