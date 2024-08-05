@@ -66,16 +66,16 @@ class DosenController extends Controller
         $user->save();
         $dosen->save();
 
-        return redirect()->route('dosen.index');
+        return redirect()->route('kaprodi.dosen.index');
     }
 
     public function dosenEdit($id)
     {
         // fetch kelas buat ngambil data semua kelas yg ada di db
         $kelas = Kelas::all();
-
+        
         $dosen = Dosen::findOrFail($id);
-        return view('dosen.edit', compact('dosen'));
+        return view('dosen.edit', compact('dosen', 'kelas'));
     }
 
     public function dosenUpdate(Request $request, $id)
@@ -92,13 +92,13 @@ class DosenController extends Controller
 
         $dosen->update($request->all());
 
-        return redirect()->route('dosen.index');
+        return redirect()->route('kaprodi.dosen.index');
     }
 
     public function dosenDelete($id)
     {
         $dosen = Dosen::findOrFail($id);
         $dosen->delete();
-        return redirect()->route('dosen.index');
+        return redirect()->route('kaprodi.dosen.index');
     }
 }
