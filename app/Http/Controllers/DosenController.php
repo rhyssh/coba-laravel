@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Dosen;
 use App\Models\Kelas;
 use App\Models\User;
+use App\Models\Mahasiswa;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class DosenController extends Controller
 {
@@ -105,4 +107,5 @@ class DosenController extends Controller
         
         return redirect()->route('kaprodi.dosen.index');
     }
+
 }
