@@ -8,21 +8,64 @@ use App\Models\Kaprodi;
 
 class KaprodiController extends Controller
 {
-    //DOSEN MANAGEMENT CRUD
     public function index()
     {
-        return view('Kaprodi.index');
+        return view('kaprodi._dashboard');
     }
 
+    //CLASS MANAGEMENT CRUD
+    public function classIndex()
+    {
+        return view('class.index');
+    }
+
+    public function classCreate()
+    {
+        return view('class.create');
+    }
+
+    public function classStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'string|required',
+            'jumlah' => 'integer|required',
+        ]);
+
+        Kaprodi::create($validated);
+        return redirect()->route('class.index');
+    }
+
+    public function classEdit(Kaprodi $kaprodi)
+    {
+        return view('class.edit', compact('kaprodi'));
+    }
+
+    public function classUpdate(Request $request, Kaprodi $kaprodi)
+    {
+        $validated = $request->validate([
+            'name' => 'string|required',
+            'jumlah' => 'integer|required',
+        ]);
+        $kaprodi->update($validated);
+        return redirect()->route('class.index');
+    }
+
+    public function classDelete(Kaprodi $kaprodi)
+    {
+        $kaprodi->delete();
+        return redirect()->route('class.index');
+    }
+
+    // Dosen Mangement CRUD -> Already exist on the DosenController
     // public function dosenIndex()
     // {
     //     $dosen = Dosen::all();
-    //     return view('Kaprodi.dosenIndex', compact('dosen'));
+    //     return view('kaprodi.dosen.index', compact('dosen'));
     // }
 
     // public function dosenCreate(Kaprodi $kaprodi)
     // {
-    //     return view('Kaprodi.dosen.create', compact('kaprodi'));
+    //     return view('kaprodi.dosen.create', compact('kaprodi'));
     // }
 
     // public function dosenStore(Request $request, Kaprodi $kaprodi)
@@ -42,7 +85,7 @@ class KaprodiController extends Controller
 
     // public function dosenEdit(Kaprodi $kaprodi, Dosen $dosen)
     // {
-    //     return view('Kaprodi.dosenEdit', compact('kaprodi', 'dosen'));
+    //     return view('kaprodi.dosen.edit', compact('kaprodi', 'dosen'));
     // }
 
     // public function dosenUpdate(Request $request, Kaprodi $kaprodi, Dosen $dosen)
@@ -64,50 +107,4 @@ class KaprodiController extends Controller
     //     $dosen->delete();
     //     return redirect()->route('kaprodi.dosen.index', $kaprodi);
     // }
-
-    // //CLASS MANAGEMENT CRUD
-
-    // public function classIndex()
-    // {
-    //     return view('kaprodi.class.index');
-    // }
-
-    // public function classCreate()
-    // {
-    //     return view('kaprodi.class.create');
-    // }
-
-    // public function classStore(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'name' => 'string|required',
-    //         'jumlah' => 'integer|required',
-    //     ]);
-
-    //     Kaprodi::create($validated);
-    //     return redirect()->route('kaprodi.class.index');
-    // }
-
-    // public function classEdit(Kaprodi $kaprodi)
-    // {
-    //     return view('kaprodi.class.edit', compact('kaprodi'));
-    // }
-
-    // public function classUpdate(Request $request, Kaprodi $kaprodi)
-    // {
-    //     $validated = $request->validate([
-    //         'name' => 'string|required',
-    //         'jumlah' => 'integer|required',
-    //     ]);
-    //     $kaprodi->update($validated);
-    //     return redirect()->route('kaprodi.class.index');
-    // }
-
-    // public function classDelete(Kaprodi $kaprodi)
-    // {
-    //     $kaprodi->delete();
-    //     return redirect()->route('kaprodi.class.index');
-    // }
-
-
 }

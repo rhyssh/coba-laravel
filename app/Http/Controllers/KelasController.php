@@ -15,8 +15,7 @@ class KelasController extends Controller
         // Ambil semua kelas beserta mahasiswa yang terdaftar di masing-masing kelas
         $kelas = Kelas::with('dosen')->get();
 
-        // Kembalikan view dengan data kelas dan mahasiswas
-        return view('Kelas.index', compact('kelas'));
+        return view('class.index', compact('kelas'));
     }
 
     public function showKelas($id)
@@ -45,13 +44,13 @@ class KelasController extends Controller
     public function kelasCreate()
     {  
         $dosens = Dosen::all();
-        return view('kaprodi.createClass', compact('dosens'));
+        return view('class.create', compact('dosens'));
     }
 
     public function kelasStore(Request $request)
     {
          // Validate the incoming request data
-         $request->validate([
+        $request->validate([
             'nama' => 'required|string|max:255',
             'jumlah' => 'required|integer|min:1',
             'dosen_id' => 'nullable|exists:dosens,id',
@@ -71,7 +70,7 @@ class KelasController extends Controller
         }
 
         // Redirect back to the index route with a success message
-        return redirect()->route('kaprodi.class.index')->with('success', 'Kelas created successfully!');
+        return redirect()->route('class.index')->with('success', 'Kelas created successfully!');
     }
 
     public function kelasEdit($id)
@@ -81,7 +80,7 @@ class KelasController extends Controller
         $kelasList = Kelas::all(); // For dropdown options
         $capacity = $kelas->jumlah;
 
-        return view('Kaprodi.editClass', compact('kelas', 'dosens', 'kelasList', 'capacity'));
+        return view('class.edit', compact('kelas', 'dosens', 'kelasList', 'capacity'));
     }
 
     public function kelasUpdate(Request $request, $id)
@@ -121,7 +120,7 @@ class KelasController extends Controller
         }
 
         // Redirect back to the index route with a success message
-        return redirect()->route('kaprodi.class.index')->with('success', 'Kelas updated successfully!');
+        return redirect()->route('class.index')->with('success', 'Kelas updated successfully!');
     }
 
     public function kelasDelete($id)
@@ -135,8 +134,7 @@ class KelasController extends Controller
         // Optionally, delete the Kelas record
         $kelas->delete();
 
-        // Redirect back to the index page
-        return redirect()->route('kelas.index');
+        return redirect()->route('class.index');
     }
 
     // public function addStudent(Request $request, Kelas $kelas)

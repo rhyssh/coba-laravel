@@ -10,17 +10,20 @@ use Illuminate\Support\Facades\Hash;
 
 class DosenController extends Controller
 {
-    public function showDosen()
+    public function dashboard() {
+        return view('dosen._dashboard');
+    }
+
+    public function dosenIndex()
     {
-        $dosen = Dosen::all();
         $dosen = Dosen::with('kelas')->get();
-        return view('kaprodi.dosenIndex', compact('dosen'));
+        return view('dosen.index', compact('dosen'));
     }
 
     public function dosenCreate()
     {
         $kelas = Kelas::all();
-        return view('kaprodi.dosenCreate', compact('kelas'));
+        return view('dosen.create', compact('kelas'));
     }
 
     public function dosenStore(Request $request)
@@ -44,9 +47,9 @@ class DosenController extends Controller
         // otomatis rolenya dosen wali
         $user = User::create([
             'username' => $request->name,
-            'email' => $request->name . '@example.com', // EMAIL DUMMY UNTUK TESTING
-            'password' => Hash::make('password'), // PASSWORD DUMMY UNTUK TESTING 
-            'role' => 'dosen wali',
+            'email' => $request->name . '@example.com', // Replace with actual email logic
+            'password' => Hash::make('password'), // Replace with actual password logic
+            'role' => 'dosen-wali',
         ]);
     
         // Buat dosen baru
@@ -57,9 +60,12 @@ class DosenController extends Controller
             'nip' => $request->nip,
             'name' => $request->name,
         ]);
-    
-        return redirect()->route('kaprodi.dosen.index')->with('success', 'Dosen berhasil ditambahkan');
-    }    
+
+        $user->save();
+        $dosen->save();
+
+        return redirect()->route('dosen.index');
+    }
 
     public function dosenEdit($id)
     {
@@ -67,7 +73,7 @@ class DosenController extends Controller
         $kelas = Kelas::all();
 
         $dosen = Dosen::findOrFail($id);
-        return view('kaprodi.dosenEdit', compact('dosen', 'kelas'));
+        return view('dosen.edit', compact('dosen'));
     }
 
     public function dosenUpdate(Request $request, $id)
@@ -84,13 +90,13 @@ class DosenController extends Controller
 
         $dosen->update($request->all());
 
-        return redirect()->route('kaprodi.dosen.index');
+        return redirect()->route('dosen.index');
     }
 
     public function dosenDelete($id)
     {
         $dosen = Dosen::findOrFail($id);
         $dosen->delete();
-        return redirect()->route('kaprodi.dosen.index');
+        return redirect()->route('dosen.index');
     }
 }

@@ -1,13 +1,22 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
+use App\Models\FakeDataMk;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\DosenController;
-use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\MahasiswaController;
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
 
-// Redirect to login if visiting the root URL
 Route::get('/', function () {
     return redirect('login');
 });
@@ -97,3 +106,40 @@ Route::middleware('auth')->group(function () {
 
 
 });
+
+Route::get('/dashboarddosen', function () {
+    return view('Dosen.dashboard');
+});
+
+Route::get('/detailclass', function () {
+    return view('class.show');
+})->name('detail.class');
+
+Route::get('/datamahasiswa', function () {
+    return view('Dosen.datamhs');
+});
+
+Route::get('/detailmhs', function () {
+    return view('Dosen.detailmhs');
+})->name('detailmhs');
+
+Route::get('/editmhs', function () {
+    return view('Dosen.editdatamhs');
+})->name('editmhs');
+
+Route::get('/pengajuanmhs', function () {
+    return view('Dosen.pengajuanmhs');
+})->name('ajumhs');
+
+Route::get('/kelas', function () {
+    return view('Mahasiswa.kelas');
+})->name('mhs.kelas');
+Route::get('/edit-data', function () {
+    return view('Mahasiswa.edit');
+})->name('mhs.edit-data');
+
+Route::get('/mata-kuliah/{id}', function ($id) {
+    return view('Mahasiswa.detailMk', [
+        "data" => FakeDataMk::getById($id),
+    ]);
+})->name('mhs.detailMk');

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('username');
             $table->string('email')->unique();
             $table->string('password')->unique();
-            $table->enum('role', ['kaprodi', 'dosen wali', 'mahasiswa']);
+            $table->enum('role', ['kaprodi', 'dosen-wali', 'mahasiswa']);
             $table->timestamps();
         });
     }
