@@ -53,8 +53,8 @@ Route::middleware('auth')->group(function () {
                 Route::get('/{id}/edit', [KelasController::class, 'kelasEdit'])->name('kaprodi.class.edit');
                 Route::put('/class/{id}/update', [KelasController::class, 'kelasUpdate'])->name('kaprodi.class.update');
                 Route::delete('/{id}', [KelasController::class, 'kelasDelete'])->name('kaprodi.class.destroy');
-                // Route::post('{kelas}/add-student/{mahasiswa}', [KelasController::class, 'addStudent'])->name('kaprodi.class.addStudent');
-                // Route::delete('{kelas}/remove-student/{mahasiswa}', [KelasController::class, 'removeStudent'])->name('kaprodi.class.removeStudent');
+                Route::post('/add-student', [KelasController::class, 'addStudent'])->name('kaprodi.class.add-student');
+                Route::post('/remove-student/{mahasiswaId}', [KelasController::class, 'removeStudent'])->name('kaprodi.class.remove-student');
             });
         });
     // });

@@ -33,6 +33,8 @@ class DosenController extends Controller
             'kode_dosen' => 'required|unique:dosens,kode_dosen',
             'nip' => 'required|unique:dosens,nip',
             'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
     
         // Check if the selected kelas already has a dosen
@@ -53,7 +55,7 @@ class DosenController extends Controller
         ]);
     
         // Buat dosen baru
-        Dosen::create([
+        $dosen = Dosen::create([
             'user_id' => $user->id,
             'kelas_id' => $request->kelas_id,
             'kode_dosen' => $request->kode_dosen,

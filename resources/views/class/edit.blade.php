@@ -28,50 +28,51 @@
                 @enderror
             </div>
 
-
             <!-- Dosen Wali -->
             <div class="mb-4">
-              <label for="dosen_id" class="block text-sm font-medium text-gray-700">Dosen Wali</label>
-              <select id="dosen_id" name="dosen_id" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('dosen_id') border-red-500 @enderror">
-                  <option value="">Pilih Dosen</option>
-                  @foreach ($dosens as $dosen)
-                      <option value="{{ $dosen->id }}" {{ $kelas->dosen && $kelas->dosen->id == $dosen->id ? 'selected' : '' }}>
-                          {{ $dosen->name }}
-                      </option>
-                  @endforeach
-              </select>
-              @error('dosen_id')
-                  <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-              @enderror
+                <label for="dosen_id" class="block text-sm font-medium text-gray-700">Dosen Wali</label>
+                <select id="dosen_id" name="dosen_id" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('dosen_id') border-red-500 @enderror">
+                    <option value="">Pilih Dosen</option>
+                    @foreach ($dosens as $dosen)
+                        <option value="{{ $dosen->id }}" {{ $kelas->dosen && $kelas->dosen->id == $dosen->id ? 'selected' : '' }}>
+                            {{ $dosen->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('dosen_id')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
-
-            <!-- Mahasiwa -->
+            <!-- Daftar Mahasiswa -->
             <div class="bg-white p-6 rounded-lg border-2 border-indigo-700 shadow-md">
-              <h2 class="text-xl font-semibold mb-4 text-indigo-700">Daftar Mahasiswa</h2>
-              <div class="overflow-x-auto">
-                  <table class="min-w-full bg-white">
-                      <thead>
-                          <tr>
-                              <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">No</th>
-                              <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">Nama Mahasiswa</th>
-                              <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">NIM</th>
-                              <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">Hapus</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          @foreach ($kelas->mahasiswa as $index => $mahasiswa)
-                          <tr>
-                              <td class="py-2 px-4 border-b border-gray-200">{{ $index + 1 }}</td>
-                              <td class="py-2 px-4 border-b border-gray-200">{{ $mahasiswa->name }}</td>
-                              <td class="py-2 px-4 border-b border-gray-200">{{ $mahasiswa->nim }}</td>
-                              <td class="py-2 px-4 border-b border-gray-200"></td>
-                          </tr>
-                          @endforeach
-                      </tbody>
-                  </table>
-              </div>
-          </div>
+                <h2 class="text-xl font-semibold mb-4 text-indigo-700">Daftar Mahasiswa</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white">
+                        <thead>
+                            <tr>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">No</th>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">Nama Mahasiswa</th>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">NIM</th>
+                                <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">Tambah/Hapus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($mahasiswas as $mahasiswa)
+                            <tr>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $loop->iteration }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mahasiswa->name }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">{{ $mahasiswa->nim }}</td>
+                                <td class="py-2 px-4 border-b border-gray-200">
+                                    <input type="checkbox" name="mahasiswas[]" value="{{ $mahasiswa->id }}" class="mahasiswa-checkbox" {{ $kelas->mahasiswa->contains($mahasiswa->id) ? 'checked' : '' }}>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <p id="selected-count" class="mt-2 text-sm font-medium text-gray-700">0/{{ old('jumlah', $kelas->jumlah) }}</p>
+            </div>
 
             <!-- Submit Button -->
             <div class="flex gap-3 mt-8">
@@ -85,4 +86,23 @@
         </form>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const checkboxes = document.querySelectorAll('.mahasiswa-checkbox');
+    const selectedCount = document.getElementById('selected-count');
+    const capacity = {{ $kelas->jumlah }};
+
+    function updateSelectedCount() {
+        const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+        selectedCount.textContent = `${checkedCount}/${capacity}`;
+    }
+    
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateSelectedCount));
+
+    // Initialize the count
+    updateSelectedCount();
+});
+</script>
 @endsection
