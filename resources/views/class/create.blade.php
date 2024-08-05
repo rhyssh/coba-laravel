@@ -6,7 +6,7 @@
 <div class="flex flex-col">
     <div class="py-3 pb-5 px-3 mx-1 min-[360px]:mx-3 my-4 mb-5 bg-white rounded-xl shadow-lg">
         <h3 class="mt-5 text-xl font-semibold text-center text-indigo-600">Tambah Kelas</h3>
-        <form method="POST" action="{{ route('kaprodi.class.store') }}" class="space-y-3">
+        <form method="POST" action="{{ route('kaprodi.kelas.store') }}" class="space-y-3">
             @csrf
 
             <!-- Nama Kelas -->
@@ -59,7 +59,7 @@
 
             <!-- Submit Button -->
             <div class="flex gap-3 mt-8">
-                <a href="{{ route('kaprodi.class.index') }}" class="px-6 py-2 font-semibold text-indigo-700 transition duration-200 ease-in-out border border-indigo-700 rounded-md cursor-pointer hover:text-white hover:bg-indigo-800">
+                <a href="{{ route('kaprodi.kelas.index') }}" class="px-6 py-2 font-semibold text-indigo-700 transition duration-200 ease-in-out border border-indigo-700 rounded-md cursor-pointer hover:text-white hover:bg-indigo-800">
                     Kembali
                 </a>
                 <button type="submit" class="px-6 py-2 text-white transition duration-200 ease-in-out bg-indigo-700 rounded-md cursor-pointer hover:bg-indigo-800">

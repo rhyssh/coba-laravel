@@ -34,14 +34,11 @@ class KelasController extends Controller
         // return view('kaprodi.classDetail', compact('kelas', 'mahasiswas'));
 
         $kelas = Kelas::with('mahasiswa', 'dosen')->findOrFail($id);
-
-        // Debugging to see what we get
-        // dd($kelas->mahasiswas);
         $mahasiswas = Mahasiswa::where('kelas_id', $id)->get();
-        $dosens = Dosen::where('kelas_id', $id)->get();
+        $dosens = Dosen::where('kelas_id', $id)->first();
         $capacity = $kelas->jumlah;
         
-        return view('kaprodi.classDetail', compact('kelas', 'mahasiswas', 'dosens', 'capacity'));
+        return view('class.show', compact('kelas', 'mahasiswas', 'dosens', 'capacity'));
         
     }
     
@@ -89,7 +86,7 @@ class KelasController extends Controller
             Mahasiswa::whereIn('id', $mahasiswaIds)->update(['kelas_id' => $kelas->id]);
         }
 
-        return redirect()->route('class.index')->with('success', 'Kelas berhasil dibuat!');
+        return redirect()->route('kaprodi.kelas.index')->with('success', 'Kelas berhasil dibuat!');
     }
 
     // public function addStudent(Request $request)
@@ -168,7 +165,7 @@ class KelasController extends Controller
                 ->whereNotIn('id', $mahasiswaIds)
                 ->update(['kelas_id' => null]);
 
-        return redirect()->route('class.index')->with('success', 'Kelas updated successfully.');
+        return redirect()->route('kaprodi.kelas.index')->with('success', 'Kelas updated successfully.');
     }
 
     public function kelasDelete($id)
@@ -183,7 +180,7 @@ class KelasController extends Controller
         // Optionally, delete the Kelas record
         $kelas->delete();
 
-        return redirect()->route('class.index');
+        return redirect()->route('kaprodi.kelas.index');
     }
 
 }

@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [KaprodiController::class, 'index'])->name('kaprodi.index');
 
             Route::group(['prefix' => 'dosen'], function () {
-                Route::get('/', [KaprodiController::class, 'dosenIndex'])->name('kaprodi.dosen.index');
+                Route::get('/', [DosenController::class, 'dosenIndex'])->name('kaprodi.dosen.index');
                 Route::get('/create', [DosenController::class, 'dosenCreate'])->name('kaprodi.dosen.create');
                 Route::post('/', [DosenController::class, 'dosenStore'])->name('kaprodi.dosen.store');
                 Route::get('/{id}', [DosenController::class, 'dosenEdit'])->name('kaprodi.dosen.edit');
@@ -45,13 +45,14 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/{id}', [DosenController::class, 'dosenDelete'])->name('kaprodi.dosen.delete');
             });
 
-            Route::group(['prefix' => 'class'], function () {
-                Route::get('/', [KaprodiController::class, 'classIndex'])->name('kaprodi.class.index');
-                Route::get('/create', [KaprodiController::class, 'classCreate'])->name('kaprodi.class.create');
-                Route::post('/', [KaprodiController::class, 'classStore'])->name('kaprodi.class.store');
-                Route::get('/{id}', [KaprodiController::class, 'classEdit'])->name('kaprodi.class.edit');
-                Route::post('/update', [KaprodiController::class, 'classUpdate'])->name('kaprodi.class.update');
-                Route::delete('/{id}', [KaprodiController::class, 'classDelete'])->name('kaprodi.class.delete');
+            Route::group(['prefix' => 'kelas'], function () {
+                Route::get('/', [KelasController::class, 'kelasIndex'])->name('kaprodi.kelas.index');
+                Route::get('/detail/{id}', [KelasController::class, 'showKelas'])->name('kaprodi.kelas.show');
+                Route::get('/create', [KelasController::class, 'kelasCreate'])->name('kaprodi.kelas.create');
+                Route::post('/', [KelasController::class, 'kelasStore'])->name('kaprodi.kelas.store');
+                Route::get('/{id}', [KelasController::class, 'kelasEdit'])->name('kaprodi.kelas.edit');
+                Route::post('/update', [KelasController::class, 'kelasUpdate'])->name('kaprodi.kelas.update');
+                Route::delete('/{id}', [KelasController::class, 'kelasDelete'])->name('kaprodi.kelas.delete');
             });
         });
     });
@@ -78,12 +79,8 @@ Route::middleware('auth')->group(function () {
                 Route::get('/{id}', [DosenController::class, 'kelasEdit'])->name('dosen.kelas.edit');
                 Route::post('/update', [DosenController::class, 'kelasUpdate'])->name('dosen.kelas.update');
                 Route::delete('/{id}', [DosenController::class, 'kelasDelete'])->name('dosen.kelas.delete');
-                Route::get('/', [KelasController::class, 'kelasIndex'])->name('dosen.kelas.index');
-                Route::get('/create', [KelasController::class, 'kelasCreate'])->name('dosen.kelas.create');
-                Route::post('/', [KelasController::class, 'kelasStore'])->name('dosen.kelas.store');
-                Route::get('/{id}', [KelasController::class, 'kelasEdit'])->name('dosen.kelas.edit');
-                Route::post('/update', [KelasController::class, 'kelasUpdate'])->name('dosen.kelas.update');
-                Route::delete('/{id}', [KelasController::class, 'kelasDelete'])->name('dosen.kelas.delete');
+                
+                
             });
 
             Route::group(['prefix' => 'requests'], function () {

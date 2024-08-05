@@ -5,10 +5,10 @@
 @section('content')
 <div class="flex flex-col">
     <div class="py-3 pb-5 px-3 mx-1 min-[360px]:mx-3 my-4 mb-5 bg-white rounded-xl shadow-lg">
-        <h3 class="text-indigo-600 mt-5 font-semibold text-xl text-center">Edit Kelas</h3>
-        <form method="POST" action="{{ route('kaprodi.class.update', $kelas->id) }}" class="space-y-3">
+        <h3 class="mt-5 text-xl font-semibold text-center text-indigo-600">Edit Kelas</h3>
+        <form method="POST" action="{{ route('kaprodi.kelas.update', $kelas->id) }}" class="space-y-3">
             @csrf
-            @method('PUT')
+            @method('PUT') <!-- coba ini di hide kalo errornya karena ini -->
 
             <!-- Nama Kelas -->
             <div class="mb-4">
@@ -45,25 +45,25 @@
             </div>
 
             <!-- Daftar Mahasiswa -->
-            <div class="bg-white p-6 rounded-lg border-2 border-indigo-700 shadow-md">
-                <h2 class="text-xl font-semibold mb-4 text-indigo-700">Daftar Mahasiswa</h2>
+            <div class="p-6 bg-white border-2 border-indigo-700 rounded-lg shadow-md">
+                <h2 class="mb-4 text-xl font-semibold text-indigo-700">Daftar Mahasiswa</h2>
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white">
                         <thead>
                             <tr>
-                                <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">No</th>
-                                <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">Nama Mahasiswa</th>
-                                <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">NIM</th>
-                                <th class="py-2 px-4 border-b border-gray-200 bg-indigo-100 text-left text-sm leading-4 text-indigo-700 tracking-wider">Tambah/Hapus</th>
+                                <th class="px-4 py-2 text-sm leading-4 tracking-wider text-left text-indigo-700 bg-indigo-100 border-b border-gray-200">No</th>
+                                <th class="px-4 py-2 text-sm leading-4 tracking-wider text-left text-indigo-700 bg-indigo-100 border-b border-gray-200">Nama Mahasiswa</th>
+                                <th class="px-4 py-2 text-sm leading-4 tracking-wider text-left text-indigo-700 bg-indigo-100 border-b border-gray-200">NIM</th>
+                                <th class="px-4 py-2 text-sm leading-4 tracking-wider text-left text-indigo-700 bg-indigo-100 border-b border-gray-200">Tambah/Hapus</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($mahasiswas as $mahasiswa)
                             <tr>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $loop->iteration }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mahasiswa->name }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">{{ $mahasiswa->nim }}</td>
-                                <td class="py-2 px-4 border-b border-gray-200">
+                                <td class="px-4 py-2 border-b border-gray-200">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-2 border-b border-gray-200">{{ $mahasiswa->name }}</td>
+                                <td class="px-4 py-2 border-b border-gray-200">{{ $mahasiswa->nim }}</td>
+                                <td class="px-4 py-2 border-b border-gray-200">
                                     <input type="checkbox" name="mahasiswas[]" value="{{ $mahasiswa->id }}" class="mahasiswa-checkbox" {{ $kelas->mahasiswa->contains($mahasiswa->id) ? 'checked' : '' }}>
                                 </td>
                             </tr>
@@ -76,10 +76,10 @@
 
             <!-- Submit Button -->
             <div class="flex gap-3 mt-8">
-                <a href="{{ route('kaprodi.class.index') }}" class="border border-indigo-700 text-indigo-700 font-semibold px-6 py-2 rounded-md hover:text-white hover:bg-indigo-800 transition duration-200 ease-in-out cursor-pointer">
+                <a href="{{ route('kaprodi.kelas.index') }}" class="px-6 py-2 font-semibold text-indigo-700 transition duration-200 ease-in-out border border-indigo-700 rounded-md cursor-pointer hover:text-white hover:bg-indigo-800">
                     Kembali
                 </a>
-                <button type="submit" class="bg-indigo-700 text-white px-6 py-2 rounded-md hover:bg-indigo-800 transition duration-200 ease-in-out cursor-pointer">
+                <button type="submit" class="px-6 py-2 text-white transition duration-200 ease-in-out bg-indigo-700 rounded-md cursor-pointer hover:bg-indigo-800">
                     Simpan Perubahan
                 </button>
             </div>
