@@ -39,7 +39,6 @@ class KelasController extends Controller
         $capacity = $kelas->jumlah;
         
         return view('class.show', compact('kelas', 'mahasiswas', 'dosens', 'capacity'));
-        
     }
     
     public function kelasCreate()
