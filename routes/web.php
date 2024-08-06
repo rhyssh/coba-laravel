@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [KaprodiController::class, 'index'])->name('kaprodi.index');
 
             Route::group(['prefix' => 'dosen'], function () {
-                // Route::get('/', [DosenController::class, 'dosenIndex'])->name('kaprodi.dosen.index');
+                Route::get('/', [DosenController::class, 'dosenIndex'])->name('kaprodi.dosen.index');
                 Route::get('/create', [DosenController::class, 'dosenCreate'])->name('kaprodi.dosen.create');
                 Route::post('/', [DosenController::class, 'dosenStore'])->name('kaprodi.dosen.store');
                 Route::get('/{id}', [DosenController::class, 'dosenEdit'])->name('kaprodi.dosen.edit');
