@@ -16,6 +16,7 @@ class Mahasiswa extends Model
         'name',
         'tempat_lahir',
         'tanggal_lahir',
+        'edit'
     ];
 
     public function user()

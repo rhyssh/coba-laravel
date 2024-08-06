@@ -90,10 +90,11 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => 'mahasiswa'], function () {
             Route::get('/', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
             
-            // Route untuk request edit data
             Route::get('/request/edit', [MahasiswaController::class, 'requestEdit'])->name('mahasiswa.request.edit');
             Route::post('/request/edit', [MahasiswaController::class, 'submitRequestEdit'])->name('mahasiswa.submit.request.edit');
             
+            Route::get('/edit', [MahasiswaController::class, 'editByMahasiswa'])->name('mahasiswa.edit');
+            Route::post('/update', [MahasiswaController::class, 'updateByMahasiswa'])->name('mahasiswa.update');
         });
     });
 });

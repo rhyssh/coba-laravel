@@ -37,12 +37,21 @@
                     </tr>
                 </tbody>
             </table>
-            <a href="#">
-                <button
-                    class="px-6 py-2 mt-8 text-white transition duration-200 ease-in-out bg-red-600 rounded-md hover:bg-red-700">
-                    Edit data
-                </button>
-            </a>
+            @if ( $student->edit == 0 ) 
+                <a href="{{ route('mahasiswa.request.edit') }}">
+                    <button
+                        class="px-6 py-2 mt-8 text-white transition duration-200 ease-in-out bg-red-600 rounded-md hover:bg-red-700">
+                        Request Edit data
+                    </button>
+                </a>
+            @elseif ( $student->edit == 1 ) 
+                <a href="{{ route('mahasiswa.edit') }}">
+                    <button
+                        class="px-6 py-2 mt-8 text-white transition duration-200 ease-in-out bg-blue-600 rounded-md hover:bg-blue-700">
+                        Edit data
+                    </button>
+                </a>
+            @endif
 
             <a href="#" class="">
                 <button

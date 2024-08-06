@@ -14,7 +14,7 @@
                     <a href="{{ route('dosen.requests') }}" class="block px-4 py-2 rounded hover:bg-indigo-600 hover:text-white">Pengajuan</a>
                 @elseif( auth()->user()->role == 'mahasiswa')
                     <a href="{{ route('mahasiswa.dashboard') }}" class="block px-4 py-2 rounded hover:bg-indigo-600 hover:text-white">My Profile</a>
-                    <a href="{{ route('mahasiswa.request.edit') }}" class="block px-4 py-2 rounded hover:bg-indigo-600 hover:text-white">Request Edit Data</a>
+                    {{-- <a href="{{ route('mahasiswa.request.edit') }}" class="block px-4 py-2 rounded hover:bg-indigo-600 hover:text-white">Request Edit Data</a> --}}
                 @endif
             @endauth
         </nav>

@@ -8,11 +8,15 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Request as EditRequest;
+
 class MahasiswaController extends Controller
 {
     public function index()
     {
-        $students = Mahasiswa::all();
+        $dosen = Auth::user();
+        $kelas_id = $dosen->dosen->kelas_id;
+
+        $students = Mahasiswa::where('kelas_id', $kelas_id)->get();
         return view('mahasiswa.index', compact('students'));
     }
 
@@ -24,7 +28,6 @@ class MahasiswaController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'kelas_id' => 'required|integer|exists:kelas,id',
             'nim' => 'required|string|max:20|unique:mahasiswas,nim',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
@@ -41,9 +44,12 @@ class MahasiswaController extends Controller
             'role' => 'mahasiswa',
         ]);
 
+        $dosen = Auth::user();
+        $kelas_id = $dosen->dosen->kelas_id;
+
         Mahasiswa::create([
             'user_id' => $user->id,
-            'kelas_id' => $request->kelas_id,
+            'kelas_id' => $kelas_id,
             'nim' => $request->nim,
             'name' => $request->name,
             'tempat_lahir' => $request->tempat_lahir,
@@ -112,15 +118,14 @@ class MahasiswaController extends Controller
     {
         // Validate input
         $validatedData = $request->validate([
-            'kelas_id' => 'required|integer|exists:kelas,id',
             'keterangan' => 'required|string|max:255',
         ]);
 
         // Get the mahasiswa ID from the authenticated user
-        $mahasiswaId = Mahasiswa::where('user_id', Auth::id())->first()->id;
+        $mahasiswa = Mahasiswa::where('user_id', Auth::id())->first();
     
         // Check if a request already exists for this mahasiswa
-        $existingRequest = EditRequest::where('mahasiswa_id', $mahasiswaId)->first();
+        $existingRequest = EditRequest::where('mahasiswa_id', $mahasiswa->id)->first();
     
         if ($existingRequest) {
             // If a request already exists, handle rejection
@@ -129,17 +134,43 @@ class MahasiswaController extends Controller
     
         // Create a new request if no existing request is found
         EditRequest::create([
-            'kelas_id' => $validatedData['kelas_id'],
-            'mahasiswa_id' => $mahasiswaId,
+            'kelas_id' => $mahasiswa->kelas_id,
+            'mahasiswa_id' => $mahasiswa->id,
             'keterangan' => $validatedData['keterangan'],
         ]);
-
-        // $user = Auth::user();
-        // $student = $user->mahasiswa->edit;
-        // $student->edit = 1; // pending
-        // $student->save();
     
         return redirect()->route('mahasiswa.dashboard')->with('success', 'Request edit data telah dikirim.');
     }
     
+    public function editByMahasiswa() 
+    {
+        $user = Auth::user();
+        $mahasiswa = $user->mahasiswa;
+
+        return view('mahasiswa.editByMahasiswa', compact('mahasiswa'));
+    }
+
+    public function updateByMahasiswa(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nim' => 'required|string|max:20|unique:mahasiswas,nim,' . Auth::user()->mahasiswa->id,
+            'name' => 'required|string|max:255',
+            'tempat_lahir' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+        ]);
+
+        $user = Auth::user();
+        $mahasiswa = $user->mahasiswa;
+        
+        $student = Mahasiswa::findOrFail($mahasiswa->id);
+        $student->update([
+            'nim' => $validatedData['nim'],
+            'name' => $validatedData['name'],
+            'tempat_lahir' => $validatedData['tempat_lahir'],
+            'tanggal_lahir' => $validatedData['tanggal_lahir'],
+            'edit' => 0,
+        ]);
+
+        return redirect()->route('mahasiswa.dashboard')->with('success', 'Mahasiswa updated successfully.');
+    }
 }
