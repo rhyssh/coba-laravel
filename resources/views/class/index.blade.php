@@ -18,26 +18,26 @@
                 <thead>
                     <tr>
                         <th class="px-4 py-2 text-sm leading-4 tracking-wider text-left text-indigo-700 bg-indigo-100 border-b border-gray-200">No</th>
-                        <th class="px-4 py-2 text-sm leading-4 tracking-wider text-left text-indigo-700 bg-indigo-100 border-b border-gray-200">Nama Kelas</th>
-                        <th class="px-4 py-2 text-sm leading-4 tracking-wider text-left text-indigo-700 bg-indigo-100 border-b border-gray-200">Kapasitas</th>
-                        <th class="px-4 py-2 text-sm leading-4 tracking-wider text-left text-indigo-700 bg-indigo-100 border-b border-gray-200">Dosen Wali</th>
-                        <th class="px-4 py-2 text-sm leading-4 tracking-wider text-left text-indigo-700 bg-indigo-100 border-b border-gray-200">Action</th>
+                        <th class="px-4 py-2 text-sm leading-4 tracking-wider text-center text-indigo-700 bg-indigo-100 border-b border-gray-200">Nama Kelas</th>
+                        <th class="px-4 py-2 text-sm leading-4 tracking-wider text-center text-indigo-700 bg-indigo-100 border-b border-gray-200">Dosen Wali</th>
+                        <th class="px-4 py-2 text-sm leading-4 tracking-wider text-center text-indigo-700 bg-indigo-100 border-b border-gray-200">Kapasitas</th>
+                        <th class="px-4 py-2 text-sm leading-4 tracking-wider text-center text-indigo-700 bg-indigo-100 border-b border-gray-200">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($kelas as $index => $kelasItem)
                     <tr>
                         <td class="px-4 py-2 border-b border-gray-200">{{ $index + 1 }}</td>
-                        <td class="px-4 py-2 border-b border-gray-200">{{ $kelasItem->nama }}</td>
-                        <td class="px-4 py-2 border-b border-gray-200">{{ $kelasItem->jumlah }}</td>
-                        <td class="px-4 py-2 border-b border-gray-200">
+                        <td class="px-4 py-2 border-b border-gray-200 text-center">{{ $kelasItem->nama }}</td>
+                        <td class="px-4 py-2 border-b border-gray-200 text-center">
                             @if ($kelasItem->dosen)
                                 {{ $kelasItem->dosen->name }}
                             @else
                                 Belum ada
                             @endif
                         </td>
-                        <td class="px-4 py-2 border-b border-gray-200">
+                        <td class="px-4 py-2 border-b border-gray-200 text-center">{{ $kelasItem->jumlah }}</td>
+                        <td class="px-4 py-2 border-b border-gray-200 text-center">
                             <a href="{{ route('kaprodi.kelas.show', $kelasItem->id) }}" class="font-bold text-indigo-600 hover:text-indigo-900">Detail</a>
                             <a href="{{ route('kaprodi.kelas.edit', $kelasItem->id) }}" class="ml-4 font-bold text-indigo-600 hover:text-indigo-900">Edit</a>
                             <form action="{{ route('kaprodi.kelas.delete', $kelasItem->id) }}" method="POST" style="display: inline;">

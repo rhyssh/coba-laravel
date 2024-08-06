@@ -12,16 +12,10 @@
         <div class="mb-4">
             <input type="hidden" name="user_id" id="user_id" value="{{ $dosen->user_id }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
-
+        
         <div class="mb-4">
-            <label for="kelas_id" class="block text-gray-700 text-sm font-bold mb-2">Kelas:</label>
-            <select name="kelas_id" id="kelas_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                @foreach ($kelas as $k)
-                    <option value="{{ $k->id }}" {{ $dosen->kelas_id == $k->id ? 'selected' : '' }}>
-                        {{ $k->id }}
-                    </option>
-                @endforeach
-            </select>
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nama:</label>
+            <input type="text" name="name" id="name" value="{{ $dosen->name }}" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
 
         <div class="mb-4">
@@ -35,8 +29,14 @@
         </div>
 
         <div class="mb-4">
-            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nama:</label>
-            <input type="text" name="name" id="name" value="{{ $dosen->name }}" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <label for="kelas_id" class="block text-gray-700 text-sm font-bold mb-2">Kelas:</label>
+            <select name="kelas_id" id="kelas_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @foreach ($kelas as $k)
+                    <option value="{{ $k->id }}" {{ $dosen->kelas_id == $k->id ? 'selected' : '' }}>
+                        {{ $k->id }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
         <div class="flex items-center justify-between">

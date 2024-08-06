@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/create', [KelasController::class, 'kelasCreate'])->name('kaprodi.kelas.create');
                 Route::post('/', [KelasController::class, 'kelasStore'])->name('kaprodi.kelas.store');
                 Route::get('/{id}', [KelasController::class, 'kelasEdit'])->name('kaprodi.kelas.edit');
-                Route::post('/update', [KelasController::class, 'kelasUpdate'])->name('kaprodi.kelas.update');
+                Route::put('/kelas/{id}/update', [KelasController::class, 'kelasUpdate'])->name('kaprodi.kelas.update');
                 Route::delete('/{id}', [KelasController::class, 'kelasDelete'])->name('kaprodi.kelas.delete');
             });
         });

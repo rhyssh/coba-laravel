@@ -9,6 +9,7 @@
         <form method="POST" action="{{ route('kaprodi.kelas.update', $kelas->id) }}" class="space-y-3">
             @csrf
             @method('PUT') <!-- coba ini di hide kalo errornya karena ini -->
+                            <!--- aman, masalahanya di parameter route -->
 
             <!-- Nama Kelas -->
             <div class="mb-4">
