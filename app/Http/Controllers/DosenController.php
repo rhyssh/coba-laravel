@@ -9,6 +9,7 @@ use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Request as EditRequest;
 
 class DosenController extends Controller
 {
@@ -128,7 +129,7 @@ class DosenController extends Controller
 
     public function indexRequest() 
     {
-        $requests = Request::with('mahasiswa', 'kelas')->get();
+        $requests = EditRequest::with('mahasiswa', 'kelas')->get();
         // dd($requests);
         // $students = Mahasiswa::all();
         return view('dosen.request', compact('requests'));
@@ -136,7 +137,7 @@ class DosenController extends Controller
 
     public function approveRequest($id)
     {
-        $request = Request::findOrFail($id);
+        $request = EditRequest::findOrFail($id);
 
         $mahasiswa = $request->mahasiswa;
 
@@ -150,7 +151,7 @@ class DosenController extends Controller
 
     public function rejectRequest($id)
     {
-        $request = Request::findOrFail($id);
+        $request = EditRequest::findOrFail($id);
 
         $mahasiswa = $request->mahasiswa;
 

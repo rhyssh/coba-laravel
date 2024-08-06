@@ -10,12 +10,12 @@
             @csrf
             <div class="space-y-6">
                 <div>
-                    <label for="nim" class="block text-sm font-medium text-gray-700">NIM</label>
-                    <input type="text" id="nim" name="nim" value="{{ $student->nim }}" class="block w-full px-4 py-2 mt-1 transition duration-150 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
-                </div>
-                <div>
                     <label for="name" class="block text-sm font-medium text-gray-700">Nama Mahasiswa</label>
                     <input type="text" id="name" name="name" value="{{ $student->name }}" class="block w-full px-4 py-2 mt-1 transition duration-150 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+                <div>
+                    <label for="nim" class="block text-sm font-medium text-gray-700">NIM</label>
+                    <input type="text" id="nim" name="nim" value="{{ $student->nim }}" class="block w-full px-4 py-2 mt-1 transition duration-150 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
                 </div>
                 <div>
                     <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
