@@ -32,7 +32,7 @@ class LoginController extends Controller
                 case 'kaprodi':
                     return redirect()->intended('/kaprodi');
                 case 'dosen-wali':
-                    return redirect()->intended('/dosenwali');
+                    return redirect()->intended('/dosenwali/myclass');
                 case 'mahasiswa':
                     return redirect()->intended('/mahasiswa');
             }
