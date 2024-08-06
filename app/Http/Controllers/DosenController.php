@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Kelas;
-use App\Models\User;
 use App\Models\Mahasiswa;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class DosenController extends Controller
 {
@@ -74,11 +74,13 @@ class DosenController extends Controller
 
     public function dosenEdit($id)
     {
-        // fetch kelas buat ngambil data semua kelas yg ada di db
-        $kelas = Kelas::all();
-        
         $dosen = Dosen::findOrFail($id);
-        return view('dosen.edit', compact('dosen', 'kelas'));
+
+        $kelas = Kelas::whereDoesntHave('dosen')
+            ->orWhere('id', $dosen->kelas_id)
+            ->get();        
+
+            return view('dosen.edit', compact('dosen', 'kelas'));
     }
 
     public function dosenUpdate(Request $request, $id)
@@ -116,6 +118,7 @@ class DosenController extends Controller
         $dosen  = $user->dosen;
 
         $kelas = $dosen->kelas;
+
         $kelas_id = $dosen->kelas_id;
         $mahasiswas = Mahasiswa::where('kelas_id', $kelas_id)->get();
 

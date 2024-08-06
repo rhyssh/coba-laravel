@@ -35,10 +35,10 @@ class KelasController extends Controller
 
         $kelas = Kelas::with('mahasiswa', 'dosen')->findOrFail($id);
         $mahasiswas = Mahasiswa::where('kelas_id', $id)->get();
-        $dosens = Dosen::where('kelas_id', $id)->first();
+
         $capacity = $kelas->jumlah;
         
-        return view('class.show', compact('kelas', 'mahasiswas', 'dosens', 'capacity'));
+        return view('class.show', compact('kelas', 'mahasiswas', 'capacity'));
     }
     
     public function kelasCreate()
@@ -77,8 +77,14 @@ class KelasController extends Controller
         $kelas = Kelas::create([
             'nama' => $request->input('nama'),
             'jumlah' => $request->input('jumlah'),
-            'dosen_id' => $request->input('dosen_id') ?: null,
         ]);
+
+        // Update dosen with kelas_id if dosen_id is provided
+        if ($request->input('dosen_id')) {
+            $dosen = Dosen::findOrFail($request->input('dosen_id'));
+            $dosen->kelas_id = $kelas->id;
+            $dosen->save();
+        }
 
         // Assign Mahasiswa to Kelas
         if ($numberOfMahasiswa > 0) {
@@ -114,8 +120,14 @@ class KelasController extends Controller
 
     public function kelasEdit($id)
     {
-        $kelas = Kelas::with('mahasiswa')->findOrFail($id);
-        $dosens = Dosen::all();
+        $kelas = Kelas::with('mahasiswa', 'dosen')->findOrFail($id);
+        $dosens = Dosen::whereDoesntHave('kelas')
+            ->orWhere('kelas_id', $kelas->id)
+            ->get();
+        
+        // dd($kelas->dosen);
+        // dd($dosens);
+        
         $kelasList = Kelas::all(); // For dropdown options
         $mahasiswas = Mahasiswa::whereNull('kelas_id')->get();
         $capacity = $kelas->jumlah;

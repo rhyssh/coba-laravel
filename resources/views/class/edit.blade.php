@@ -33,9 +33,9 @@
             <div class="mb-4">
                 <label for="dosen_id" class="block text-sm font-medium text-gray-700">Dosen Wali</label>
                 <select id="dosen_id" name="dosen_id" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error('dosen_id') border-red-500 @enderror">
-                    <option value="">Pilih Dosen</option>
+                    <option value="" {{ is_null($kelas->dosen?->id)? 'selected': '' }}> Belum Ada</option>
                     @foreach ($dosens as $dosen)
-                        <option value="{{ $dosen->id }}" {{ $kelas->dosen && $kelas->dosen->id == $dosen->id ? 'selected' : '' }}>
+                        <option value="{{ $dosen->id }}" {{ $kelas->dosen->id == $dosen->id ? 'selected' : '' }}>
                             {{ $dosen->name }}
                         </option>
                     @endforeach

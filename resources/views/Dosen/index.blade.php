@@ -22,12 +22,12 @@
                 @foreach($dosen as $d)
                 <tr>
                     <td class="px-4 py-2 border-b border-gray-300">{{ $loop->iteration }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->name }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->kode_dosen }}</td>
+                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->nip }}</td>
                     <td class="px-4 py-2 border-b border-gray-300">
                         {{ $d->kelas ? $d->kelas->nama : 'Belum ada kelas' }}
                     </td>
-                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->kode_dosen }}</td>
-                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->nip }}</td>
-                    <td class="px-4 py-2 border-b border-gray-300">{{ $d->name }}</td>
                     <td class="px-4 py-2 border-b border-gray-300">
                         <a href="{{ route('kaprodi.dosen.edit', $d->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                         <form action="{{ route('kaprodi.dosen.delete', $d->id) }}" method="POST" class="inline">
