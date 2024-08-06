@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Kelas;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Request as EditRequest;
 
@@ -104,6 +105,23 @@ class MahasiswaController extends Controller
 
         // Kirim data mahasiswa ke view
         return view('mahasiswa.dashboard', compact('student'));
+    }
+
+    public function myclass() 
+    {
+        $user = Auth::user();
+        $mahasiswa = $user->mahasiswa;
+
+        // Check if the mahasiswa is associated with a class
+        if ($mahasiswa && $mahasiswa->kelas_id) {
+            $kelas = Kelas::with('mahasiswa')->findOrFail($mahasiswa->kelas_id);
+            $mahasiswas = Mahasiswa::where('kelas_id', $mahasiswa->kelas_id)->get();
+        } else {
+            $kelas = null;
+            $mahasiswas = collect(); // Empty collection
+        }
+
+        return view('mahasiswa.myclass', compact('kelas', 'mahasiswas'));
     }
 
     public function requestEdit()

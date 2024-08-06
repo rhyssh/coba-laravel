@@ -74,7 +74,6 @@ Route::middleware('auth')->group(function () {
 
             Route::group(['prefix' => 'myclass'], function () {
                 Route::get('/', [DosenController::class, 'myclass'])->name('dosen.myclass');
-                
             });
 
             Route::group(['prefix' => 'requests'], function () {
@@ -89,7 +88,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['must-mahasiswa'])->group(function () {
         Route::group(['prefix' => 'mahasiswa'], function () {
             Route::get('/', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
-            
+            Route::get('/myclass', [MahasiswaController::class, 'myclass'])->name('mahasiswa.myclass');
+
             Route::get('/request/edit', [MahasiswaController::class, 'requestEdit'])->name('mahasiswa.request.edit');
             Route::post('/request/edit', [MahasiswaController::class, 'submitRequestEdit'])->name('mahasiswa.submit.request.edit');
             

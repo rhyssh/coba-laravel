@@ -53,13 +53,6 @@
                 </a>
             @endif
 
-            <a href="#" class="">
-                <button
-                    class="px-6 py-2 mt-8 text-white transition duration-200 ease-in-out bg-indigo-700 rounded-md hover:bg-indigo-800">
-                    Lihat Kelas
-                </button>
-            </a>
-
         </div>
     </div>
 
