@@ -22,40 +22,40 @@ class UserSeeder extends Seeder
             'role' => 'kaprodi',
         ]);
 
-        // // Dosen Wali
-        // for ($i = 1; $i <= 5; $i++) {
-        //     User::create([
-        //         'username' => 'dosenwali0' . $i,
-        //         'email' => 'dosenwali0' . $i . '@example.com',
-        //         'password' => Hash::make('dosenwali').$i,
-        //         'role' => 'dosen-wali',
-        //     ]);
-        // }
-
-        // // Mahasiswa
-        // for ($i = 1; $i <= 20; $i++) {
-        //     User::create([
-        //         'username' => 'mahasiswa00' . $i,
-        //         'email' => 'mahasiswa00' . $i . '@example.com',
-        //         'password' => Hash::make('mahasiswa').$i,
-        //         'role' => 'mahasiswa',
-        //     ]);
-        // }
-
         // Dosen Wali
-        User::create([
-            'username' => 'faris',
-            'email' => 'doswal@example.com',
-            'password' => Hash::make('doswal123'),
-            'role' => 'dosen-wali',
-        ]);
+        for ($i = 1; $i <= 5; $i++) {
+            User::create([
+                'username' => 'dosenwali0' . $i,
+                'email' => 'dosenwali0' . $i . '@example.com',
+                'password' => Hash::make('dosenwali'),
+                'role' => 'dosen-wali',
+            ]);
+        }
 
         // Mahasiswa
-        User::create([
-            'username' => 'wowi',
-            'email' => 'mahasiswa@example.com',
-            'password' => Hash::make('mahasiswa123'),
-            'role' => 'mahasiswa',
-        ]);
+        for ($i = 1; $i <= 20; $i++) {
+            User::create([
+                'username' => 'mahasiswa00' . $i,
+                'email' => 'mahasiswa00' . $i . '@example.com',
+                'password' => Hash::make('mahasiswa'),
+                'role' => 'mahasiswa',
+            ]);
+        }
+
+        // // Dosen Wali
+        // User::create([
+        //     'username' => 'faris',
+        //     'email' => 'doswal@example.com',
+        //     'password' => Hash::make('doswal123'),
+        //     'role' => 'dosen-wali',
+        // ]);
+
+        // // Mahasiswa
+        // User::create([
+        //     'username' => 'wowi',
+        //     'email' => 'mahasiswa@example.com',
+        //     'password' => Hash::make('mahasiswa123'),
+        //     'role' => 'mahasiswa',
+        // ]);
     }
 }

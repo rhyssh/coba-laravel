@@ -115,17 +115,20 @@ class DosenController extends Controller
     public function myclass() 
     {
         $user = Auth::user();
+        $dosen = $user->dosen;
 
-        $dosen  = $user->dosen;
-
-        $kelas = $dosen->kelas;
-
-        $kelas_id = $dosen->kelas_id;
-        $mahasiswas = Mahasiswa::where('kelas_id', $kelas_id)->get();
+        if ($dosen && $dosen->kelas) {
+            $kelas = $dosen->kelas;
+            $kelas_id = $dosen->kelas_id;
+            $mahasiswas = Mahasiswa::where('kelas_id', $kelas_id)->get();
+        } else {
+            $kelas = null;
+            $mahasiswas = collect(); // Menggunakan koleksi kosong untuk menghindari error di view
+        }
 
         return view('dosen.myclass', compact('kelas', 'mahasiswas'));
-
     }
+
 
     public function indexRequest() 
     {
