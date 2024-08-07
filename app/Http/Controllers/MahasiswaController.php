@@ -141,24 +141,30 @@ class MahasiswaController extends Controller
 
         // Get the mahasiswa ID from the authenticated user
         $mahasiswa = Mahasiswa::where('user_id', Auth::id())->first();
-    
+
+        // Check if the mahasiswa has a kelas_id
+        if (is_null($mahasiswa->kelas_id)) {
+            return redirect()->back()->withErrors(['keterangan' => 'Anda belum terdaftar dalam kelas manapun.']);
+        }
+
         // Check if a request already exists for this mahasiswa
         $existingRequest = EditRequest::where('mahasiswa_id', $mahasiswa->id)->first();
-    
+
         if ($existingRequest) {
             // If a request already exists, handle rejection
             return redirect()->route('mahasiswa.dashboard')->with('error', 'A request already exists for this mahasiswa.');
         }
-    
+
         // Create a new request if no existing request is found
         EditRequest::create([
             'kelas_id' => $mahasiswa->kelas_id,
             'mahasiswa_id' => $mahasiswa->id,
             'keterangan' => $validatedData['keterangan'],
         ]);
-    
+
         return redirect()->route('mahasiswa.dashboard')->with('success', 'Request edit data telah dikirim.');
     }
+
     
     public function editByMahasiswa() 
     {
